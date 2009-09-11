@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Agents" schema="ICTOOSD" table="AGENTS">
+    <id name="agentid" type="long">
+      <column name="AGENTID" precision="10" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <many-to-one class="ca.sait.oosd.hibernate.Agencies" fetch="select" name="agencies">
+      <column name="AGENCYID" precision="10" scale="0"/>
+    </many-to-one>
+    <property name="agtfirstname" type="string">
+      <column length="40" name="AGTFIRSTNAME"/>
+    </property>
+    <property name="agtmiddleinitial" type="string">
+      <column length="10" name="AGTMIDDLEINITIAL"/>
+    </property>
+    <property name="agtlastname" type="string">
+      <column length="40" name="AGTLASTNAME"/>
+    </property>
+    <property name="agtbusphone" type="string">
+      <column length="40" name="AGTBUSPHONE"/>
+    </property>
+    <property name="agtemail" type="string">
+      <column length="100" name="AGTEMAIL"/>
+    </property>
+    <property name="agtposition" type="string">
+      <column length="40" name="AGTPOSITION"/>
+    </property>
+    <set inverse="true" name="customerses">
+      <key>
+        <column name="AGENTID" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Customers"/>
+    </set>
+  </class>
+</hibernate-mapping>

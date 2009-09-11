@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Packages" schema="ICTOOSD" table="PACKAGES">
+    <id name="packageid" type="long">
+      <column name="PACKAGEID" precision="10" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <property name="pkgname" type="string">
+      <column length="100" name="PKGNAME" not-null="true"/>
+    </property>
+    <property name="pkgstartdate" type="date">
+      <column length="7" name="PKGSTARTDATE"/>
+    </property>
+    <property name="pkgenddate" type="date">
+      <column length="7" name="PKGENDDATE"/>
+    </property>
+    <property name="pkgdesc" type="string">
+      <column length="100" name="PKGDESC"/>
+    </property>
+    <property name="pkgbaseprice" type="big_decimal">
+      <column name="PKGBASEPRICE" not-null="true" scale="4"/>
+    </property>
+    <property name="pkgagencycommission" type="big_decimal">
+      <column name="PKGAGENCYCOMMISSION" scale="4"/>
+    </property>
+    <set inverse="false" name="productsSupplierses" table="PACKAGES_PRODUCTS_SUPPLIERS">
+      <key>
+        <column name="PACKAGEID" not-null="true" precision="10" scale="0"/>
+      </key>
+      <many-to-many entity-name="ca.sait.oosd.hibernate.ProductsSuppliers">
+        <column name="PRODUCTSUPPLIERID" not-null="true" precision="10" scale="0"/>
+      </many-to-many>
+    </set>
+    <set inverse="true" name="bookingses">
+      <key>
+        <column name="PACKAGEID" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Bookings"/>
+    </set>
+  </class>
+</hibernate-mapping>

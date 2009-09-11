@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-reverse-engineering PUBLIC "-//Hibernate/Hibernate Reverse Engineering DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd">
+<hibernate-reverse-engineering>
+  <schema-selection match-schema="ICTOOSD"/>
+  <table-filter match-name="AFFILIATIONS"/>
+  <table-filter match-name="AGENCIES"/>
+  <table-filter match-name="AGENTS"/>
+  <table-filter match-name="BOOKINGDETAILS"/>
+  <table-filter match-name="BOOKINGS"/>
+  <table-filter match-name="CLASSES"/>
+  <table-filter match-name="CREDITCARDS"/>
+  <table-filter match-name="CUSTOMERS"/>
+  <table-filter match-name="CUSTOMERS_REWARDS"/>
+  <table-filter match-name="FEES"/>
+  <table-filter match-name="PACKAGES"/>
+  <table-filter match-name="PACKAGES_PRODUCTS_SUPPLIERS"/>
+  <table-filter match-name="PRODUCTS"/>
+  <table-filter match-name="PRODUCTS_SUPPLIERS"/>
+  <table-filter match-name="REGIONS"/>
+  <table-filter match-name="REWARDS"/>
+  <table-filter match-name="SUPPLIERCONTACTS"/>
+  <table-filter match-name="SUPPLIERS"/>
+  <table-filter match-name="TRIPTYPES"/>
+</hibernate-reverse-engineering>

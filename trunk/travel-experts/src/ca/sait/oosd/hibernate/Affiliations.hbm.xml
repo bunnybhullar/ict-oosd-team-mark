@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Affiliations" schema="ICTOOSD" table="AFFILIATIONS">
+    <id name="affilitationid" type="string">
+      <column length="20" name="AFFILITATIONID"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="affname" type="string">
+      <column length="100" name="AFFNAME"/>
+    </property>
+    <property name="affdesc" type="string">
+      <column length="100" name="AFFDESC"/>
+    </property>
+    <set inverse="true" name="suppliercontactses">
+      <key>
+        <column length="20" name="AFFILIATIONID"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Suppliercontacts"/>
+    </set>
+  </class>
+</hibernate-mapping>
