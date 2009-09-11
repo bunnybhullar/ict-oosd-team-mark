@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.ProductsSuppliers" catalog="NewTravelExperts" table="PRODUCTS_SUPPLIERS">
+    <id name="productsupplierid" type="long">
+      <column name="PRODUCTSUPPLIERID" precision="10" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <many-to-one class="ca.sait.oosd.hibernate.Products" fetch="select" name="products">
+      <column name="PRODUCTID" precision="10" scale="0"/>
+    </many-to-one>
+    <many-to-one class="ca.sait.oosd.hibernate.Suppliers" fetch="select" name="suppliers">
+      <column name="SUPPLIERID" precision="10" scale="0"/>
+    </many-to-one>
+    <set inverse="true" name="bookingdetailses">
+      <key>
+        <column name="PRODUCTSUPPLIERID" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Bookingdetails"/>
+    </set>
+    <set inverse="true" name="packageses" table="PACKAGES_PRODUCTS_SUPPLIERS">
+      <key>
+        <column name="PRODUCTSUPPLIERID" not-null="true" precision="10" scale="0"/>
+      </key>
+      <many-to-many entity-name="ca.sait.oosd.hibernate.Packages">
+        <column name="PACKAGEID" not-null="true" precision="10" scale="0"/>
+      </many-to-many>
+    </set>
+  </class>
+</hibernate-mapping>

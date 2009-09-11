@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Bookings" catalog="NewTravelExperts" table="BOOKINGS">
+    <id name="bookingid" type="long">
+      <column name="BOOKINGID" precision="10" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <many-to-one class="ca.sait.oosd.hibernate.Packages" fetch="select" name="packages">
+      <column name="PACKAGEID" precision="10" scale="0"/>
+    </many-to-one>
+    <many-to-one class="ca.sait.oosd.hibernate.Customers" fetch="select" name="customers">
+      <column name="CUSTOMERID" precision="10" scale="0"/>
+    </many-to-one>
+    <many-to-one class="ca.sait.oosd.hibernate.Triptypes" fetch="select" name="triptypes">
+      <column length="2" name="TRIPTYPEID"/>
+    </many-to-one>
+    <property name="bookingdate" type="date">
+      <column length="7" name="BOOKINGDATE"/>
+    </property>
+    <property name="bookingno" type="string">
+      <column length="100" name="BOOKINGNO"/>
+    </property>
+    <property name="travelercount" type="java.lang.Double">
+      <column name="TRAVELERCOUNT" precision="53" scale="0"/>
+    </property>
+    <set inverse="true" name="bookingdetailses">
+      <key>
+        <column name="BOOKINGID" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Bookingdetails"/>
+    </set>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Regions" catalog="NewTravelExperts" table="REGIONS">
+    <id name="regionid" type="string">
+      <column length="10" name="REGIONID"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="regionname" type="string">
+      <column length="50" name="REGIONNAME"/>
+    </property>
+    <set inverse="true" name="bookingdetailses">
+      <key>
+        <column length="10" name="REGIONID"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Bookingdetails"/>
+    </set>
+  </class>
+</hibernate-mapping>
