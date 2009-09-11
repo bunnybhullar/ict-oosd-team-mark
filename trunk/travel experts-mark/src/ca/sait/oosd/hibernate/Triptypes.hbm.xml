@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Triptypes" catalog="NewTravelExperts" table="TRIPTYPES">
+    <id name="triptypeid" type="string">
+      <column length="2" name="TRIPTYPEID"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="ttname" type="string">
+      <column length="50" name="TTNAME"/>
+    </property>
+    <set inverse="true" name="bookingses">
+      <key>
+        <column length="2" name="TRIPTYPEID"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Bookings"/>
+    </set>
+  </class>
+</hibernate-mapping>

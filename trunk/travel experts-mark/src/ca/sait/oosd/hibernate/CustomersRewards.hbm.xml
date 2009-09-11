@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.CustomersRewards" catalog="NewTravelExperts" table="CUSTOMERS_REWARDS">
+    <composite-id class="ca.sait.oosd.hibernate.CustomersRewardsId" name="id">
+      <key-property name="customerid" type="long">
+        <column name="CUSTOMERID" precision="10" scale="0"/>
+      </key-property>
+      <key-property name="rewardid" type="long">
+        <column name="REWARDID" precision="10" scale="0"/>
+      </key-property>
+    </composite-id>
+    <many-to-one class="ca.sait.oosd.hibernate.Customers" fetch="select" insert="false" name="customers" update="false">
+      <column name="CUSTOMERID" not-null="true" precision="10" scale="0"/>
+    </many-to-one>
+    <many-to-one class="ca.sait.oosd.hibernate.Rewards" fetch="select" insert="false" name="rewards" update="false">
+      <column name="REWARDID" not-null="true" precision="10" scale="0"/>
+    </many-to-one>
+    <property name="rwdnumber" type="string">
+      <column length="50" name="RWDNUMBER" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

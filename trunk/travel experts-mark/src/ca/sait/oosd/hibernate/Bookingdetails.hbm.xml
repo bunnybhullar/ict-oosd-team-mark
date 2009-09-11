@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Bookingdetails" catalog="NewTravelExperts" table="BOOKINGDETAILS">
+    <id name="bookingdetailid" type="long">
+      <column name="BOOKINGDETAILID" precision="10" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="ca.sait.oosd.hibernate.ProductsSuppliers" fetch="select" name="productsSuppliers">
+      <column name="PRODUCTSUPPLIERID" precision="10" scale="0"/>
+    </many-to-one>
+    <many-to-one class="ca.sait.oosd.hibernate.Fees" fetch="select" name="fees">
+      <column length="20" name="FEEID"/>
+    </many-to-one>
+    <many-to-one class="ca.sait.oosd.hibernate.Classes" fetch="select" name="classes">
+      <column length="10" name="CLASSID"/>
+    </many-to-one>
+    <many-to-one class="ca.sait.oosd.hibernate.Regions" fetch="select" name="regions">
+      <column length="10" name="REGIONID"/>
+    </many-to-one>
+    <many-to-one class="ca.sait.oosd.hibernate.Bookings" fetch="select" name="bookings">
+      <column name="BOOKINGID" precision="10" scale="0"/>
+    </many-to-one>
+    <property name="itineraryno" type="java.lang.Double">
+      <column name="ITINERARYNO" precision="53" scale="0"/>
+    </property>
+    <property name="tripstart" type="date">
+      <column length="7" name="TRIPSTART"/>
+    </property>
+    <property name="tripend" type="date">
+      <column length="7" name="TRIPEND"/>
+    </property>
+    <property name="description" type="string">
+      <column length="510" name="DESCRIPTION"/>
+    </property>
+    <property name="destination" type="string">
+      <column length="510" name="DESTINATION"/>
+    </property>
+    <property name="baseprice" type="big_decimal">
+      <column name="BASEPRICE" scale="4"/>
+    </property>
+    <property name="agencycommission" type="big_decimal">
+      <column name="AGENCYCOMMISSION" scale="4"/>
+    </property>
+  </class>
+</hibernate-mapping>
