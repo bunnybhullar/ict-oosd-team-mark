@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/home/user1/repo/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/jcalendar-1.3.3.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/hibernate3.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/hibernate-annotations.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/hibernate-commons-annotations.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/ejb3-persistence.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/antlr-2.7.6.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/asm.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/asm-attrs.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/cglib-2.1.3.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/commons-collections-2.1.1.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/ehcache-1.2.3.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/hibernate-entitymanager.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/hibernate-tools.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/javassist.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/jdbc2_0-stdext.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/jta.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/jtidy-r8-20060801.jar"/>
+	<classpathentry kind="lib" path="/home/user1/repo/ojdbc6.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

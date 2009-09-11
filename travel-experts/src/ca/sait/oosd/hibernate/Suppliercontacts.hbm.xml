@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Suppliercontacts" schema="ICTOOSD" table="SUPPLIERCONTACTS">
+    <id name="suppliercontactid" type="long">
+      <column name="SUPPLIERCONTACTID" precision="10" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <many-to-one class="ca.sait.oosd.hibernate.Affiliations" fetch="select" name="affiliations">
+      <column length="20" name="AFFILIATIONID"/>
+    </many-to-one>
+    <many-to-one class="ca.sait.oosd.hibernate.Suppliers" fetch="select" name="suppliers">
+      <column name="SUPPLIERID" precision="10" scale="0"/>
+    </many-to-one>
+    <property name="supconfirstname" type="string">
+      <column length="100" name="SUPCONFIRSTNAME"/>
+    </property>
+    <property name="supconlastname" type="string">
+      <column length="100" name="SUPCONLASTNAME"/>
+    </property>
+    <property name="supconcompany" type="string">
+      <column length="510" name="SUPCONCOMPANY"/>
+    </property>
+    <property name="supconaddress" type="string">
+      <column length="510" name="SUPCONADDRESS"/>
+    </property>
+    <property name="supconcity" type="string">
+      <column length="510" name="SUPCONCITY"/>
+    </property>
+    <property name="supconprov" type="string">
+      <column length="510" name="SUPCONPROV"/>
+    </property>
+    <property name="supconpostal" type="string">
+      <column length="510" name="SUPCONPOSTAL"/>
+    </property>
+    <property name="supconcountry" type="string">
+      <column length="510" name="SUPCONCOUNTRY"/>
+    </property>
+    <property name="supconbusphone" type="string">
+      <column length="100" name="SUPCONBUSPHONE"/>
+    </property>
+    <property name="supconfax" type="string">
+      <column length="100" name="SUPCONFAX"/>
+    </property>
+    <property name="supconemail" type="string">
+      <column length="510" name="SUPCONEMAIL"/>
+    </property>
+    <property name="supconurl" type="string">
+      <column length="510" name="SUPCONURL"/>
+    </property>
+  </class>
+</hibernate-mapping>

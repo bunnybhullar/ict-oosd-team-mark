@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Classes" schema="ICTOOSD" table="CLASSES">
+    <id name="classid" type="string">
+      <column length="10" name="CLASSID"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="classname" type="string">
+      <column length="40" name="CLASSNAME" not-null="true"/>
+    </property>
+    <property name="classdesc" type="string">
+      <column length="100" name="CLASSDESC"/>
+    </property>
+    <set inverse="true" name="bookingdetailses">
+      <key>
+        <column length="10" name="CLASSID"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Bookingdetails"/>
+    </set>
+  </class>
+</hibernate-mapping>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Suppliers" schema="ICTOOSD" table="SUPPLIERS">
+    <id name="supplierid" type="long">
+      <column name="SUPPLIERID" precision="10" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <property name="supname" type="string">
+      <column length="510" name="SUPNAME"/>
+    </property>
+    <set inverse="true" name="suppliercontactses">
+      <key>
+        <column name="SUPPLIERID" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Suppliercontacts"/>
+    </set>
+    <set inverse="true" name="productsSupplierses">
+      <key>
+        <column name="SUPPLIERID" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.ProductsSuppliers"/>
+    </set>
+  </class>
+</hibernate-mapping>

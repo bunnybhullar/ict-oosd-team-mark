@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.dialect">org.hibernate.dialect.OracleDialect</property>
+    <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:orant11g</property>
+    <property name="hibernate.connection.username">ictoosd</property>
+    <property name="hibernate.connection.password">ictoosd</property>
+    <mapping resource="ca/sait/oosd/hibernate/Affiliations.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/ProductsSuppliers.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Bookingdetails.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Creditcards.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Packages.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Products.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/CustomersRewards.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Bookings.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Customers.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Regions.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Suppliercontacts.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Agencies.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Triptypes.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Rewards.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Classes.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Agents.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Fees.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/Suppliers.hbm.xml"/>
+    <mapping resource="ca/sait/oosd/hibernate/PackagesProductsSuppliers.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

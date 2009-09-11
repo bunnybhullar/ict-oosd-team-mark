@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Agencies" schema="ICTOOSD" table="AGENCIES">
+    <id name="agencyid" type="long">
+      <column name="AGENCYID" precision="10" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <property name="agncyaddress" type="string">
+      <column length="100" name="AGNCYADDRESS"/>
+    </property>
+    <property name="agncycity" type="string">
+      <column length="100" name="AGNCYCITY"/>
+    </property>
+    <property name="agncyprov" type="string">
+      <column length="100" name="AGNCYPROV"/>
+    </property>
+    <property name="agncypostal" type="string">
+      <column length="100" name="AGNCYPOSTAL"/>
+    </property>
+    <property name="agncycountry" type="string">
+      <column length="100" name="AGNCYCOUNTRY"/>
+    </property>
+    <property name="agncyphone" type="string">
+      <column length="100" name="AGNCYPHONE"/>
+    </property>
+    <property name="agncyfax" type="string">
+      <column length="100" name="AGNCYFAX"/>
+    </property>
+    <set inverse="true" name="agentses">
+      <key>
+        <column name="AGENCYID" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Agents"/>
+    </set>
+  </class>
+</hibernate-mapping>

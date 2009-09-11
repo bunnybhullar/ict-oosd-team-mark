@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.PackagesProductsSuppliers" schema="ICTOOSD" table="PACKAGES_PRODUCTS_SUPPLIERS">
+    <!-- Hibernate tool doesnot auto genarate key-may-to-one type of mapping. https://www.hibernate.org/117.html#A36 -->
+    <composite-id>
+        <key-many-to-one column="PACKAGEID" name="packageId" class="ca.sait.oosd.hibernate.Packages" />
+        <key-many-to-one column="PRODUCTSUPPLIERID" name="productsSuppliersid" class="ca.sait.oosd.hibernate.ProductsSuppliers" />
+      <!--
+      <key-property column="PACKAGEID" name="packageId"/>
+      <key-property column="PRODUCTSUPPLIERID" name="productsSuppliersid"/>
+      -->
+    </composite-id>
+    <!--
+    <many-to-one class="ca.sait.oosd.hibernate.Packages" fetch="select" insert="false" name="packageId" update="false">
+      <column name="PACKAGEID" precision="10" scale="0"/>
+    </many-to-one>
+    <many-to-one class="ca.sait.oosd.hibernate.ProductsSuppliers" fetch="select" insert="false" name="productsSuppliersid" update="false">
+      <column name="PRODUCTSUPPLIERID" precision="10" scale="0"/>
+    </many-to-one>
+    -->
+  </class>
+</hibernate-mapping>

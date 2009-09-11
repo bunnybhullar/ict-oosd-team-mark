@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Customers" schema="ICTOOSD" table="CUSTOMERS">
+    <id name="customerid" type="long">
+      <column name="CUSTOMERID" precision="10" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="ca.sait.oosd.hibernate.Agents" fetch="select" name="agents">
+      <column name="AGENTID" precision="10" scale="0"/>
+    </many-to-one>
+    <property name="custfirstname" type="string">
+      <column length="50" name="CUSTFIRSTNAME" not-null="true"/>
+    </property>
+    <property name="custlastname" type="string">
+      <column length="50" name="CUSTLASTNAME" not-null="true"/>
+    </property>
+    <property name="custaddress" type="string">
+      <column length="150" name="CUSTADDRESS" not-null="true"/>
+    </property>
+    <property name="custcity" type="string">
+      <column length="100" name="CUSTCITY" not-null="true"/>
+    </property>
+    <property name="custprov" type="string">
+      <column length="4" name="CUSTPROV" not-null="true"/>
+    </property>
+    <property name="custpostal" type="string">
+      <column length="14" name="CUSTPOSTAL" not-null="true"/>
+    </property>
+    <property name="custcountry" type="string">
+      <column length="50" name="CUSTCOUNTRY"/>
+    </property>
+    <property name="custhomephone" type="string">
+      <column length="40" name="CUSTHOMEPHONE"/>
+    </property>
+    <property name="custbusphone" type="string">
+      <column length="40" name="CUSTBUSPHONE" not-null="true"/>
+    </property>
+    <property name="custemail" type="string">
+      <column length="100" name="CUSTEMAIL" not-null="true"/>
+    </property>
+    <set inverse="true" name="bookingses">
+      <key>
+        <column name="CUSTOMERID" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Bookings"/>
+    </set>
+    <set inverse="true" name="creditcardses">
+      <key>
+        <column name="CUSTOMERID" not-null="true" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.Creditcards"/>
+    </set>
+    <set inverse="true" name="customersRewardses">
+      <key>
+        <column name="CUSTOMERID" not-null="true" precision="10" scale="0"/>
+      </key>
+      <one-to-many class="ca.sait.oosd.hibernate.CustomersRewards"/>
+    </set>
+  </class>
+</hibernate-mapping>

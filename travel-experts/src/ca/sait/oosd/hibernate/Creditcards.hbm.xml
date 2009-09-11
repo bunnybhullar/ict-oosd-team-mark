@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 31, 2009 2:44:30 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="ca.sait.oosd.hibernate.Creditcards" schema="ICTOOSD" table="CREDITCARDS">
+    <id name="creditcardid" type="long">
+      <column name="CREDITCARDID" precision="10" scale="0"/>
+      <generator class="assigned"/>
+    </id>
+    <many-to-one class="ca.sait.oosd.hibernate.Customers" fetch="select" name="customers">
+      <column name="CUSTOMERID" not-null="true" precision="10" scale="0"/>
+    </many-to-one>
+    <property name="ccname" type="string">
+      <column length="20" name="CCNAME" not-null="true"/>
+    </property>
+    <property name="ccnumber" type="string">
+      <column length="100" name="CCNUMBER" not-null="true"/>
+    </property>
+    <property name="ccexpiry" type="date">
+      <column length="7" name="CCEXPIRY" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>
