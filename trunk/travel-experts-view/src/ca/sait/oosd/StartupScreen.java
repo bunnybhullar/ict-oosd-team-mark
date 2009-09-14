@@ -52,7 +52,7 @@ public class StartupScreen extends TEJFrame implements ActionListener{
 
         this.initGUI();
         this.adjustSize(WIDTH, HEIGHT);
-        this.alignFrameOnScreen(this);
+        this.alignFrameOnScreen(WIDTH, HEIGHT);
         
     }
     
@@ -125,7 +125,9 @@ public class StartupScreen extends TEJFrame implements ActionListener{
         });
 
         this.getContentPane().add(mainCenterPanel, BorderLayout.CENTER);
-        this.getContentPane().add(new JLabel("Travel Experts 2009"), BorderLayout.SOUTH);
+        JLabel coptrightLabel = new JLabel("Travel Experts 2009");
+        coptrightLabel.setHorizontalAlignment(JLabel.CENTER);
+        this.getContentPane().add(coptrightLabel, BorderLayout.SOUTH);
         
     }
 

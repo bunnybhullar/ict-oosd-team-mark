@@ -6,10 +6,13 @@ public class AgentGUI extends TEJFrame {
 
 	private static final long serialVersionUID = 1L;
 	
+    private final int WIDTH = 850;
+	private final int HEIGHT = 500;	
+	
 	public AgentGUI() {
 		super();
 		
-		super.alignFrameOnScreen(this);
+		super.alignFrameOnScreen(WIDTH, HEIGHT);
 	}
 
 	@Override

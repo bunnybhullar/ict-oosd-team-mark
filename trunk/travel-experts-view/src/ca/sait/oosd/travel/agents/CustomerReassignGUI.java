@@ -56,6 +56,8 @@ public class CustomerReassignGUI extends TEJFrame implements ActionListener{
     private ImageButton assignButton;
 
     private final String ADD = "ADD";
+    private final int WIDTH = 850;
+	private final int HEIGHT = 500;	    
 
 
     public CustomerReassignGUI() {
@@ -73,7 +75,7 @@ public class CustomerReassignGUI extends TEJFrame implements ActionListener{
         assignButton.addActionListener(this);
 
         this.initGUI();
-        super.alignFrameOnScreen(this);
+        super.alignFrameOnScreen(WIDTH, HEIGHT);
         
     }
     

@@ -59,7 +59,7 @@ public class CustomerRelationshipReassignHandler extends TransferHandler{
         CustomerReassignDAO customerReassignDAO = customerReassignModel.getSelectedRow(row);
         
         int selection = JOptionPane.showConfirmDialog(parent,
-                "Do you want to assign " +  "xxx"
+                "Do you want to assign " +  ((Customers)customerList.getSelectedOption()).getCustfirstname()
                 + " to " + customerReassignDAO.getAgant().getAgtfirstname() +" ?",
                 "Customer Reassign", JOptionPane.YES_NO_OPTION);
         

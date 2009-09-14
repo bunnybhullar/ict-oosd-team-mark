@@ -64,6 +64,9 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
 
     private final String ADD = "ADD";
     private final String DELETE = "DELETE";
+    
+    private final int WIDTH = 850;
+	private final int HEIGHT = 500;    
 
 
     //default constructor
@@ -84,7 +87,7 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
         relationshipButton.addActionListener(this);
 
         this.initGUI();
-        super.alignFrameOnScreen(this);
+        super.alignFrameOnScreen(WIDTH, HEIGHT);
 
     }
     
