@@ -304,7 +304,7 @@ public class TEBusinessServiceImpl implements TEBusinessService {
     public Collection<Customers> getCustomersCollection() {
         session.beginTransaction();
 
-        Query query = session.createQuery("from Customers order by custfirstname");
+        Query query = session.createQuery("from Customers where agents is null order by custfirstname");
         List resultList = query.list();
         session.getTransaction().commit();
 
