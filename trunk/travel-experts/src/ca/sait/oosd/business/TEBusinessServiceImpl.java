@@ -1,5 +1,6 @@
 package ca.sait.oosd.business;
 
+import ca.sait.oosd.dao.CustomerReassignDAO;
 import ca.sait.oosd.hibernate.Agents;
 import ca.sait.oosd.hibernate.Customers;
 import ca.sait.oosd.hibernate.Packages;
@@ -11,6 +12,8 @@ import ca.sait.oosd.logger.LoggerHelper;
 import ca.sait.oosd.util.ArgumentAssertionChecker;
 import ca.sait.oosd.util.HibernateUtil;
 import ca.sait.oosd.util.TENullValueException;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import org.hibernate.Query;
@@ -247,7 +250,7 @@ public class TEBusinessServiceImpl implements TEBusinessService {
 
             return suppliers;
 
-		}
+		} 
 
         return null;
     }
@@ -307,5 +310,32 @@ public class TEBusinessServiceImpl implements TEBusinessService {
 
 		return resultList;
     }
+
+	@Override
+	public Collection<CustomerReassignDAO> getAgentCustomerCollection() {
+		Collection<CustomerReassignDAO> agentCustomerCollection = new ArrayList<CustomerReassignDAO>();
+		Collection<Agents> agentsCollection = getAgentCollection();
+		
+		for (Agents agent : agentsCollection) {
+			Collection<Customers> customerCollection = getCustomersForAgent(agent);
+			
+			CustomerReassignDAO agentCustomers = new CustomerReassignDAO();
+			agentCustomers.setAgant(agent);
+			agentCustomers.setCustomerCollection(customerCollection);
+			
+			agentCustomerCollection.add(agentCustomers);
+			
+		}
+		
+		return agentCustomerCollection;
+	}
+
+	@Override
+	public void reassignCustomerToAgent(Customers customer) {
+        session.merge(customer);
+        session.flush();
+        session.getTransaction().commit();		
+		
+	}
 
 }
