@@ -27,7 +27,9 @@ import javax.swing.TransferHandler;
  */
 public class TableTransferHandler extends TransferHandler{
 
-    private PackageDragList source;
+	private static final long serialVersionUID = 1L;
+	
+	private PackageDragList source;
     private TEBusinessDelegate delegate;
     private TEJFrame parent;
     private ProductSupplierDataTableModel productSupplierDataTableModel;
