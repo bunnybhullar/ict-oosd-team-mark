@@ -72,17 +72,19 @@ public class NavigationButtonPanel extends JPanel{
                 break;
         }
 
+        this.add(Box.createRigidArea(new Dimension(30, 0)));
         this.add(productButton);
-        this.add(Box.createRigidArea(new Dimension(30, 0)));
+        this.add(Box.createRigidArea(new Dimension(10, 0)));
         this.add(supplierButton);
-        this.add(Box.createRigidArea(new Dimension(30, 0)));
+        this.add(Box.createRigidArea(new Dimension(10, 0)));
         this.add(packageButton);
-        this.add(Box.createRigidArea(new Dimension(30, 0)));
+        this.add(Box.createRigidArea(new Dimension(10, 0)));
         this.add(agentButton);
-        this.add(Box.createRigidArea(new Dimension(30, 0)));
+        this.add(Box.createRigidArea(new Dimension(10, 0)));
         this.add(productSupplierButton);
-        this.add(Box.createRigidArea(new Dimension(30, 0)));
+        this.add(Box.createRigidArea(new Dimension(10, 0)));
         this.add(packageProductSuppierButton);
+        this.add(Box.createRigidArea(new Dimension(30, 0)));
 
         productButton.addActionListener(new ActionListener() {
             @Override

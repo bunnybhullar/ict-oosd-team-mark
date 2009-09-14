@@ -69,6 +69,8 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
 
     private final String ADD = "ADD";
     private final String DELETE = "DELETE";
+    private final int WIDTH = 850;
+	private final int HEIGHT = 500;    
     
 
     private String[] productSupplierHeaders = {"ID", "Product", "Supplier"};
@@ -94,7 +96,7 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
         relationshipButton.addActionListener(this);
 
         this.initGUI();
-        this.alignFrameOnScreen(this);
+        this.alignFrameOnScreen(WIDTH, HEIGHT);
         
     }
     

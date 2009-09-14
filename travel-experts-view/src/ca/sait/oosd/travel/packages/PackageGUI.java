@@ -6,6 +6,9 @@ import ca.sait.oosd.business.TEBusinessDelegate;
 import ca.sait.oosd.business.TEBusinessDelegateImpl;
 import ca.sait.oosd.business.TEBusinessException;
 import ca.sait.oosd.components.NavigationButtonPanel;
+import ca.sait.oosd.components.Validator;
+import ca.sait.oosd.components.ValidatorException;
+
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -29,6 +32,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
@@ -56,7 +60,7 @@ public class PackageGUI extends TEJFrame {
     final JTextField basePriceTextField = new JTextField(15);
     final JTextField commissionTextField = new JTextField(15);
 
-    private final int WIDTH = 800;
+    private final int WIDTH = 850;
 	private final int HEIGHT = 500;
 
 
@@ -70,13 +74,13 @@ public class PackageGUI extends TEJFrame {
 
 		initGUI();
         this.adjustSize(WIDTH, HEIGHT);
-		super.alignFrameOnScreen(this);
+		super.alignFrameOnScreen(WIDTH, HEIGHT);
         
 	}
 	
 	protected void initGUI() {
         helper.log(LogLevel.INFO, "Start initlializing Package user interface...");
-
+        
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         JPanel dataEntryPane = new JPanel(new SpringLayout());
@@ -92,8 +96,10 @@ public class PackageGUI extends TEJFrame {
         dataEntryPane.add(new JLabel("Description", JLabel.TRAILING));
         dataEntryPane.add(descriptionTextField);
         dataEntryPane.add(new JLabel("Base Price", JLabel.TRAILING));
+        basePriceTextField.setHorizontalAlignment(JTextField.RIGHT);
         dataEntryPane.add(basePriceTextField);
         dataEntryPane.add(new JLabel("Agency Commission", JLabel.TRAILING));
+        commissionTextField.setHorizontalAlignment(JTextField.RIGHT);
         dataEntryPane.add(commissionTextField);
 
         SpringUtilities.makeCompactGrid(dataEntryPane,
@@ -109,11 +115,13 @@ public class PackageGUI extends TEJFrame {
         
 		final JList list = new JList(model);
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
 
 		JScrollPane listScroller = new JScrollPane(list);
-		listScroller.setPreferredSize(new Dimension(250, 80));
+		listScroller.setPreferredSize(new Dimension(350, 30));
+		listScroller.setMaximumSize(new Dimension(350, 30));
+		listScroller.setMinimumSize(new Dimension(350, 30));
 
 		//button panel
 		JPanel southPane = new JPanel();
@@ -131,7 +139,6 @@ public class PackageGUI extends TEJFrame {
 		centerPane.setLayout(grid);
 
 		centerPane.add(dataEntryPane);
-		centerPane.add(southPane, JPanel.BOTTOM_ALIGNMENT);
 
         //add the listener to the list
         ListSelectionModel selectionModel = list.getSelectionModel();
@@ -163,6 +170,8 @@ public class PackageGUI extends TEJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                	validateForm();
+                	
                     packages = new Packages();
                     packages.setPkgname(packageNameTextField.getText().trim());
                     packages.setPkgdesc(descriptionTextField.getText().trim());
@@ -175,11 +184,15 @@ public class PackageGUI extends TEJFrame {
                     model.addElement(packages);
 
                     clearComponents();
+
                     
                 } catch (TEBusinessException ex) {
                     helper.log(LogLevel.ERROR, "Exception occured while saving data..." + ex.getMessage());
                     
-                }
+                } catch (ValidatorException ex) {
+                	helper.log(LogLevel.ERROR, "Validation exception occured..." + ex.getMessage());
+					JOptionPane.showMessageDialog(PackageGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
             }
         });
 
@@ -208,6 +221,8 @@ public class PackageGUI extends TEJFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                	validateForm();
+                	
                     packages = new Packages();
                     packages.setPackageid(Long.parseLong(packageIdTextField.getText()));
                     packages.setPkgname(packageNameTextField.getText().trim());
@@ -223,7 +238,10 @@ public class PackageGUI extends TEJFrame {
                 } catch (TEBusinessException ex) {
                     helper.log(LogLevel.ERROR, "Exception occured while saving data..." + ex.getMessage());
 
-                }
+                } catch (ValidatorException ex) {
+                	helper.log(LogLevel.ERROR, "Validation exception occured..." + ex.getMessage());
+					JOptionPane.showMessageDialog(PackageGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
             }
         });
 
@@ -231,7 +249,7 @@ public class PackageGUI extends TEJFrame {
         this.getContentPane().add(new NavigationButtonPanel(TravelParts.PACKAGE), BorderLayout.NORTH);
         this.getContentPane().add(listScroller, BorderLayout.EAST);
         this.getContentPane().add(centerPane, BorderLayout.CENTER);
-
+        this.getContentPane().add(southPane, BorderLayout.SOUTH);
 		
 	}
 
@@ -266,6 +284,19 @@ public class PackageGUI extends TEJFrame {
         startDate.setDate(new Date());
         endDate.setDate(new Date());
 
+    }
+    
+    private void validateForm() throws ValidatorException{
+    	Validator.isEmptyString("Package Name", packageNameTextField.getText());
+    	Validator.isEmptyString("Description", descriptionTextField.getText());
+    	Validator.isValidNumber("Base Price", basePriceTextField.getText());
+    	Validator.isValidNumber("Agency Commission", commissionTextField.getText());
+    	Validator.isEmptyDate("Package Start Date", startDate.getDate());
+    	Validator.isEmptyDate("Package End Date", endDate.getDate());
+    	Validator.compareDates("Package Start Date", "Package End Date", startDate.getDate(), endDate.getDate());
+    	Validator.comparePrices("Base Price", "Agency Commission", 
+    			new BigDecimal(basePriceTextField.getText().trim()), 
+    			new BigDecimal(commissionTextField.getText().trim()));
     }
 	
 }

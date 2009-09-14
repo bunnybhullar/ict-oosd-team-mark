@@ -19,10 +19,12 @@ public class CustomerDragGestureListener implements DragGestureListener{
         CustomerDragList dragList = (CustomerDragList)dge.getComponent();
         Customers customer = (Customers)dragList.getSelectedValue();
 
-        StringSelection transferable = new StringSelection(Long.toString(customer.getCustomerid()));
-        dge.startDrag(DragSource.DefaultCopyDrop,
-                transferable,
-                new TEDragSourceListener());
+        if(customer != null) {
+            StringSelection transferable = new StringSelection(Long.toString(customer.getCustomerid()));
+            dge.startDrag(DragSource.DefaultCopyDrop,
+                    transferable,
+                    new TEDragSourceListener());        	
+        }
         
     }
 

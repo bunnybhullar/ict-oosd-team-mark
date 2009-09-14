@@ -45,6 +45,9 @@ public class SuppliersGUI extends TEJFrame {
     private LoggerHelper helper = new LoggerHelper(SuppliersGUI.class.getName());
     Collection<Suppliers> supplierCollection;
     private TEBusinessDelegate delegate;
+    
+    private final int WIDTH = 850;
+	private final int HEIGHT = 500;       
 
     public SuppliersGUI() {
         super();
@@ -53,7 +56,7 @@ public class SuppliersGUI extends TEJFrame {
         supplierCollection = delegate.getSuppliersCollection();
         
         this.initGUI();
-        this.alignFrameOnScreen(this);
+        this.alignFrameOnScreen(WIDTH, HEIGHT);
         
     }
     

@@ -59,7 +59,7 @@ public class ProductsGUI extends TEJFrame {
         
 		this.initGUI();
         this.adjustSize(WIDTH, HEIGHT);
-        this.alignFrameOnScreen(this);
+        this.alignFrameOnScreen(WIDTH, HEIGHT);
 		
 	}
 	
