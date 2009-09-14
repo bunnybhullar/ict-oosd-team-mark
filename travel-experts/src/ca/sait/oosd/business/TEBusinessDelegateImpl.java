@@ -1,5 +1,6 @@
 package ca.sait.oosd.business;
 
+import ca.sait.oosd.dao.CustomerReassignDAO;
 import ca.sait.oosd.hibernate.Agents;
 import ca.sait.oosd.hibernate.Customers;
 import ca.sait.oosd.hibernate.Packages;
@@ -183,6 +184,18 @@ public class TEBusinessDelegateImpl implements TEBusinessDelegate {
         return teBusinessService.getCustomersCollection();
         
     }
+
+	@Override
+	public Collection<CustomerReassignDAO> getAgentCustomerCollection() {
+		return teBusinessService.getAgentCustomerCollection();
+	}
+
+	@Override
+	public void reassignCustomerToAgent(Customers customer, Agents agent) {
+		customer.setAgents(agent);
+		teBusinessService.reassignCustomerToAgent(customer);
+		
+	}
 
 	
 }

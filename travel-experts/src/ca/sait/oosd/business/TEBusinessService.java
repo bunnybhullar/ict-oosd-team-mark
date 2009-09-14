@@ -1,5 +1,6 @@
 package ca.sait.oosd.business;
 
+import ca.sait.oosd.dao.CustomerReassignDAO;
 import ca.sait.oosd.hibernate.Agents;
 import ca.sait.oosd.hibernate.Customers;
 import ca.sait.oosd.hibernate.Packages;
@@ -32,5 +33,7 @@ public interface TEBusinessService {
     public PackagesProductsSuppliers makePackagesProductsSuppliersRelationship(PackagesProductsSuppliers packagesProductsSuppliers);
     public Collection<Customers> getCustomersForAgent(Agents agent);
     public Collection<Customers> getCustomersCollection();
+    public Collection<CustomerReassignDAO> getAgentCustomerCollection();
+    public void reassignCustomerToAgent(Customers customer);
     
 }
