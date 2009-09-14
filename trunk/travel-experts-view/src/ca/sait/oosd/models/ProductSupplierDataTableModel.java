@@ -12,7 +12,8 @@ import java.util.Vector;
  */
 public class ProductSupplierDataTableModel extends TERelationshipDataTableModel{
 
-    private Vector<ProductsSuppliers> productSupplierVector;
+	private static final long serialVersionUID = 1L;
+	private Vector<ProductsSuppliers> productSupplierVector;
 
     public ProductSupplierDataTableModel(String[] headerNames, Vector<ProductsSuppliers> productSupplierVector) {
         super(headerNames);
