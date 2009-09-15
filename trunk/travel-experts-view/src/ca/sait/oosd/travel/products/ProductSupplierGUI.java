@@ -18,6 +18,7 @@ import ca.sait.oosd.logger.LogLevel;
 import ca.sait.oosd.logger.LoggerHelper;
 
 import ca.sait.oosd.models.ProductSupplierDataTableModel;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -61,6 +62,7 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
     private Vector<ProductsSuppliers> productSupplierVector;
     private String[] headerNames = {"ID", "Product", "Supplier"};
 
+    private JTable productSupplierTable;
     private DragList productList;
     private DropList supplierList;
     private ImageButton relationshipButton;
@@ -156,7 +158,7 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
 				6, 6);
 
         //generate the product supplier data table
-        JTable productSupplierTable = new JTable(productSupplierDataTableModel);
+        productSupplierTable = new JTable(productSupplierDataTableModel);
         productSupplierTable.setFillsViewportHeight(true);
 
         JScrollPane productSupplierScrollPane = new JScrollPane(productSupplierTable, 
@@ -211,7 +213,36 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
             } 
 
         } else if (e.getActionCommand().equals(DELETE)) {
+        	if(productSupplierTable.getSelectedRow() != -1) {
+            	int option = JOptionPane.showConfirmDialog(ProductSupplierGUI.this,
+            			"Do you want to delete this ?", "Delete confirmation",
+            			JOptionPane.YES_NO_OPTION);  
+            	
+            	if(option == JOptionPane.YES_OPTION) {
+            		int[] selectedItems = productSupplierTable.getSelectedRows();
+            		for(int row = 0; row < selectedItems.length; row++) {
+            			ProductsSuppliers productsSupplier = (ProductsSuppliers)productSupplierDataTableModel.getSelectedRow(selectedItems[row]);
+            			try {
+							delegate.delete(productsSupplier);
+							productSupplierDataTableModel.removeRelationship(productsSupplier);
+							
+						} catch (TEBusinessException ex) {
+							helper.log(LogLevel.ERROR, "Exception occured while deleting..." + ex.getMessage());
+							JOptionPane.showMessageDialog(ProductSupplierGUI.this, 
+									"Exception occured while deleting...", "Error", JOptionPane.ERROR_MESSAGE);
+							
+						}
+            		}
+            		
+            	}
+            	
+        	} else {
+        		JOptionPane.showMessageDialog(ProductSupplierGUI.this, "You need to select valid rows to delete", 
+        				"Error", JOptionPane.WARNING_MESSAGE);
+        		
+        	}
 
+        	
             
         }
 

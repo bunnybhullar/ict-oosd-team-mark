@@ -65,8 +65,11 @@ public class ProductSupplierDataTableModel extends TERelationshipDataTableModel{
     }
 
     @Override
-    public void removeRelationship(int rowNumber) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void removeRelationship(TEObject teObject) {
+    	productSupplierVector.remove((ProductsSuppliers) teObject);
+    	
+    	fireTableDataChanged();
+    	
     }
 
 }

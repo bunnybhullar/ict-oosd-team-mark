@@ -29,6 +29,6 @@ public abstract class TERelationshipDataTableModel extends AbstractTableModel{
     public abstract int getRowCount();
     public abstract Object getValueAt(int rowIndex, int columnIndex);
     public abstract void addRelationship(TEObject teObject);
-    public abstract void removeRelationship(int rowNumber);
+    public abstract void removeRelationship(TEObject teObject);
 
 }

@@ -62,7 +62,7 @@ public class CustomerReassignModel extends TERelationshipDataTableModel{
 	}	
 
 	@Override
-	public void removeRelationship(int rowNumber) {
+	public void removeRelationship(TEObject teObject) {
 		
 	}
 
