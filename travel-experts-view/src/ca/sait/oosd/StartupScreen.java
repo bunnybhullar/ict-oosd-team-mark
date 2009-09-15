@@ -5,6 +5,7 @@ import ca.sait.oosd.components.ImagePanel;
 import ca.sait.oosd.components.TEJFrame;
 import ca.sait.oosd.logger.LogLevel;
 import ca.sait.oosd.logger.LoggerHelper;
+import ca.sait.oosd.travel.agents.AgentGUI;
 import ca.sait.oosd.travel.packages.PackageGUI;
 import ca.sait.oosd.travel.packages.PackagesProductsSuppliersGUI;
 import ca.sait.oosd.travel.products.ProductSupplierGUI;
@@ -27,7 +28,7 @@ import javax.swing.JPanel;
  * @purpose This is the startup screen of the project. This screen can be used to navigate to other screens
  *          such as supplier, agent, product and packages. 
  */
-public class StartupScreen extends TEJFrame implements ActionListener{
+public class StartupScreen extends TEJFrame {
 
     private LoggerHelper helper = new LoggerHelper(StartupScreen.class.getName());
     private ImageButton exitButton;
@@ -116,6 +117,13 @@ public class StartupScreen extends TEJFrame implements ActionListener{
                 new PackageGUI();
             }
         });
+        
+        agentButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new AgentGUI();
+            }
+        });        
 
         exitButton.addActionListener(new ActionListener() {
             @Override
@@ -134,12 +142,6 @@ public class StartupScreen extends TEJFrame implements ActionListener{
     @Override
     protected void adjustSize(int width, int height) {
         this.setSize(new Dimension(width, height));
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        ImageButton button = (ImageButton)e.getSource();
-
-
     }
 
 }
