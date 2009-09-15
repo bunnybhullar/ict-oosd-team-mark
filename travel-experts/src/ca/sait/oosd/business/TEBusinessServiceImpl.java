@@ -1,6 +1,7 @@
 package ca.sait.oosd.business;
 
 import ca.sait.oosd.dao.CustomerReassignDAO;
+import ca.sait.oosd.hibernate.Agencies;
 import ca.sait.oosd.hibernate.Agents;
 import ca.sait.oosd.hibernate.Customers;
 import ca.sait.oosd.hibernate.Packages;
@@ -336,6 +337,17 @@ public class TEBusinessServiceImpl implements TEBusinessService {
         session.flush();
         session.getTransaction().commit();		
 		
+	}
+
+	@Override
+	public Collection<Agencies> getAgenciesCollection() {
+        session.beginTransaction();
+
+        Query query = session.createQuery("from Agencies order by agencyid");
+        List resultList = query.list();
+        session.getTransaction().commit();
+
+		return resultList;
 	}
 
 }
