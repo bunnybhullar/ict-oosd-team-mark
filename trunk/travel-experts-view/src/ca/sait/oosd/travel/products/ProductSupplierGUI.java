@@ -88,11 +88,11 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
         productModel = new DefaultListModel();
         productSupplierVector = new Vector<ProductsSuppliers>();
 
-        relationshipButton = new ImageButton("resources/cup.gif", "Relationship", 70, 120);
+        relationshipButton = new ImageButton("resources/link.png", "Relationship", 70, 120);
         relationshipButton.setActionCommand(ADD);
         relationshipButton.addActionListener(this);
         
-        deleteButton = new ImageButton("resources/cup.gif", "Delete", 70, 120);
+        deleteButton = new ImageButton("resources/delete.png", "Delete", 70, 120);
         deleteButton.setActionCommand(DELETE);
         deleteButton.addActionListener(this);
 

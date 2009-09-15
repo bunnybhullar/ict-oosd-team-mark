@@ -258,7 +258,7 @@ public class AgentGUI extends TEJFrame {
         });
         
         //pass the product type enum to the NavigationButtonPanel, so that it disable the particular button
-        this.getContentPane().add(new NavigationButtonPanel(TravelParts.PACKAGE), BorderLayout.NORTH);
+        this.getContentPane().add(new NavigationButtonPanel(TravelParts.AGENT), BorderLayout.NORTH);
         this.getContentPane().add(listScroller, BorderLayout.EAST);
         this.getContentPane().add(centerPane, BorderLayout.CENTER);
         

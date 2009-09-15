@@ -37,12 +37,12 @@ public class NavigationButtonPanel extends JPanel{
         this.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
         this.add(Box.createHorizontalGlue());
 
-        supplierButton = new ImageButton("resources/cup.gif", "Supplier", 70, 120);
-        productButton = new ImageButton("resources/cup.gif", "Product", 70, 120);
-        packageButton = new ImageButton("resources/cup.gif", "Package", 70, 120);
-        agentButton = new ImageButton("resources/cup.gif", " Agent  ", 70, 120);
-        productSupplierButton = new ImageButton("resources/cup.gif", "Product Supplier", 70, 120);
-        packageProductSuppierButton = new ImageButton("resources/cup.gif", "<html>Package Product<br /> Supplier</html>", 70, 120);
+        supplierButton = new ImageButton("resources/supplier.png", "Supplier", 70, 120);
+        productButton = new ImageButton("resources/product.png", "Product", 70, 120);
+        packageButton = new ImageButton("resources/package.png", "Package", 70, 120);
+        agentButton = new ImageButton("resources/agent.png", " Agent  ", 70, 120);
+        productSupplierButton = new ImageButton("resources/product-supplier.png", "<html>Product <br />Supplier</html>", 70, 120);
+        packageProductSuppierButton = new ImageButton("resources/package-prod-supp.png", "<html>Package Product<br /> Supplier</html>", 70, 120);
         
         initPanel(current);
         
