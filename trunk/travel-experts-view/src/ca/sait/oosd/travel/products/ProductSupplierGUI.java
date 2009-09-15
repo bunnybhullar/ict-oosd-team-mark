@@ -159,7 +159,9 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
         JTable productSupplierTable = new JTable(productSupplierDataTableModel);
         productSupplierTable.setFillsViewportHeight(true);
 
-        JScrollPane productSupplierScrollPane = new JScrollPane(productSupplierTable);
+        JScrollPane productSupplierScrollPane = new JScrollPane(productSupplierTable, 
+        		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         productSupplierScrollPane.setPreferredSize(new Dimension(800, 200));
         productSupplierScrollPane.setMaximumSize(new Dimension(800, 200));
         productSupplierScrollPane.setMinimumSize(new Dimension(800, 200));

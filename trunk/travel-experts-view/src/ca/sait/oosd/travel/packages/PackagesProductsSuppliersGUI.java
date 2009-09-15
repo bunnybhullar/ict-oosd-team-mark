@@ -5,7 +5,6 @@ import ca.sait.oosd.TravelParts;
 import ca.sait.oosd.business.TEBusinessDelegate;
 import ca.sait.oosd.business.TEBusinessDelegateImpl;
 import ca.sait.oosd.business.TEBusinessException;
-import ca.sait.oosd.components.DragList;
 import ca.sait.oosd.components.ImageButton;
 import ca.sait.oosd.components.NavigationButtonPanel;
 import ca.sait.oosd.components.PackageDragList;
@@ -20,12 +19,15 @@ import ca.sait.oosd.models.PackagesProductsSuppliersDataTableModel;
 import ca.sait.oosd.models.ProductSupplierDataTableModel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
 import javax.swing.JFrame;
@@ -33,6 +35,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -49,7 +52,9 @@ import javax.swing.event.ListSelectionListener;
  */
 public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionListener{
 
-    private LoggerHelper helper = new LoggerHelper(PackagesProductsSuppliersGUI.class.getName());
+	private static final long serialVersionUID = 1L;
+	
+	private LoggerHelper helper = new LoggerHelper(PackagesProductsSuppliersGUI.class.getName());
     private TEBusinessDelegate delegate;
     private Collection<ProductsSuppliers> poductsSuppliersCollection;
     private Collection<Packages> packagesCollection;
@@ -64,13 +69,14 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
     private JTable productSupplierTable;
     private PackageDragList packagesList;
     private ImageButton relationshipButton;
+    private ImageButton deleteButton;
 
     private ProductsSuppliers selectedProductsSupplier;
 
     private final String ADD = "ADD";
     private final String DELETE = "DELETE";
     private final int WIDTH = 850;
-	private final int HEIGHT = 500;    
+	private final int HEIGHT = 700;    
     
 
     private String[] productSupplierHeaders = {"ID", "Product", "Supplier"};
@@ -94,9 +100,14 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
         relationshipButton = new ImageButton("resources/cup.gif", "Relationship", 70, 120);
         relationshipButton.setActionCommand(ADD);
         relationshipButton.addActionListener(this);
+        
+        deleteButton = new ImageButton("resources/cup.gif", "Delete", 70, 120);
+        deleteButton.setActionCommand(DELETE);
+        deleteButton.addActionListener(this);        
 
         this.initGUI();
-        this.alignFrameOnScreen(WIDTH, HEIGHT);
+        this.adjustSize(WIDTH, HEIGHT);
+        super.alignFrameOnScreen(WIDTH, HEIGHT);
         
     }
     
@@ -128,12 +139,16 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
 		packagesList.setLayoutOrientation(JList.VERTICAL);
 		packagesList.setVisibleRowCount(-1);
 
-        JScrollPane packagesListScroller = new JScrollPane(packagesList);
-		packagesListScroller.setPreferredSize(new Dimension(250, 80));
+        JScrollPane packagesListScroller = new JScrollPane(packagesList, 
+        		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		packagesListScroller.setPreferredSize(new Dimension(300, 200));
+		packagesListScroller.setMaximumSize(new Dimension(300, 200));
+		packagesListScroller.setMinimumSize(new Dimension(300, 200));
 
         productSupplierTable = new JTable(productSupplierDataTableModel);
         productSupplierTable.setFillsViewportHeight(true);
-        productSupplierTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        productSupplierTable.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         productSupplierTable.setDropMode(DropMode.USE_SELECTION); //hightlight the entire row when drop an item
 
         productSupplierTable.setTransferHandler(new TableTransferHandler(packagesList, delegate, PackagesProductsSuppliersGUI.this,
@@ -151,13 +166,21 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
             }
         });
 
-        JScrollPane productSupplierScrollPane = new JScrollPane(productSupplierTable);
+        JScrollPane productSupplierScrollPane = new JScrollPane(productSupplierTable, 
+        		JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+        		JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        productSupplierScrollPane.setPreferredSize(new Dimension(500, 200));
+        productSupplierScrollPane.setMaximumSize(new Dimension(500, 200));
+        productSupplierScrollPane.setMinimumSize(new Dimension(500, 200));
 
         JPanel listPanel = new JPanel(new SpringLayout());
         listPanel.add(packagesListScroller);
         listPanel.add(productSupplierScrollPane);
         listPanel.add(new JLabel(""));
-        listPanel.add(relationshipButton);
+        
+        JPanel relationButtonPane = new JPanel();
+        relationButtonPane.add(relationshipButton);
+        listPanel.add(relationButtonPane);
 
         SpringUtilities.makeCompactGrid(listPanel,
 				2, 2,
@@ -170,16 +193,28 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
         packageProductSupplierTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
         JScrollPane packageProductSupplierScrollPane = new JScrollPane(packageProductSupplierTable);
+        packageProductSupplierScrollPane.setPreferredSize(new Dimension(800, 200));
+        packageProductSupplierScrollPane.setMaximumSize(new Dimension(800, 200));
+        packageProductSupplierScrollPane.setMinimumSize(new Dimension(800, 200));
+        
+        Box southPane = Box.createVerticalBox();
+        southPane.add(packageProductSupplierScrollPane);
+        JPanel deleteButtonPane = new JPanel();
+        deleteButtonPane.add(deleteButton);
+        southPane.add(deleteButtonPane);
+        
+        JPanel centerPane = new JPanel(new FlowLayout());
+        centerPane.add(listPanel);
+        centerPane.add(southPane);        
 
         this.getContentPane().add(new NavigationButtonPanel(TravelParts.PACKAGEPRODUCTSUPPLIER), BorderLayout.NORTH);
-        this.getContentPane().add(listPanel, BorderLayout.CENTER);
-        this.getContentPane().add(packageProductSupplierScrollPane, BorderLayout.SOUTH);
+        this.getContentPane().add(centerPane, BorderLayout.CENTER);
 
     }
 
     @Override
     protected void adjustSize(int width, int height) {
-        
+    	this.setSize(new Dimension(width, height));
     }
 
     public void actionPerformed(ActionEvent e) {

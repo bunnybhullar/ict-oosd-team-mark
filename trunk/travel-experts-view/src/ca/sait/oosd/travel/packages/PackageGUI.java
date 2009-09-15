@@ -200,16 +200,22 @@ public class PackageGUI extends TEJFrame {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	try {
-            		int position = model.indexOf(packages, 0);
-            		delegate.delete(packages);
+            	int option = JOptionPane.showConfirmDialog(PackageGUI.this,
+            			"Do you want to delete this ?", "Delete confirmation",
+            			JOptionPane.YES_NO_OPTION);
+            	
+            	if(option == JOptionPane.YES_OPTION) {
+                	try {
+                		int position = model.indexOf(packages, 0);
+                		delegate.delete(packages);
 
-            		clearComponents();
-            		removeFromListModel(position);
+                		clearComponents();
+                		removeFromListModel(position);
 
-            	} catch (TEBusinessException ex) {
-            		helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
+                	} catch (TEBusinessException ex) {
+                		helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
 
+                	}
             	}
             }
         });
