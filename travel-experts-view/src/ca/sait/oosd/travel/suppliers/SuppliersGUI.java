@@ -12,6 +12,7 @@ import ca.sait.oosd.components.ValidatorException;
 import ca.sait.oosd.hibernate.Suppliers;
 import ca.sait.oosd.logger.LogLevel;
 import ca.sait.oosd.logger.LoggerHelper;
+import ca.sait.oosd.travel.packages.PackageGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -188,17 +189,23 @@ public class SuppliersGUI extends TEJFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try{
-					int position = model.indexOf(suppliers, 0);
-					delegate.delete(suppliers);
+            	int option = JOptionPane.showConfirmDialog(SuppliersGUI.this,
+            			"Do you want to delete this ?", "Delete confirmation",
+            			JOptionPane.YES_NO_OPTION);
+            	
+            	if(option == JOptionPane.YES_OPTION) {
+    				try{
+    					int position = model.indexOf(suppliers, 0);
+    					delegate.delete(suppliers);
 
-					clearComponents();
-					removeFromListModel(position);
+    					clearComponents();
+    					removeFromListModel(position);
 
-				}catch (TEBusinessException ex){
-					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + ex.getMessage());
+    				}catch (TEBusinessException ex){
+    					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + ex.getMessage());
 
-				}
+    				}	
+            	}
 			}
 		});
 

@@ -27,6 +27,7 @@ import ca.sait.oosd.components.Validator;
 import ca.sait.oosd.components.ValidatorException;
 import ca.sait.oosd.logger.LogLevel;
 import ca.sait.oosd.logger.LoggerHelper;
+import ca.sait.oosd.travel.packages.PackageGUI;
 import ca.sait.oosd.hibernate.Products;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -175,20 +176,26 @@ public class ProductsGUI extends TEJFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (products != null) {
-					try {
-						int position = model.indexOf(products, 0);
-						delegate.delete(products);
+            	int option = JOptionPane.showConfirmDialog(ProductsGUI.this,
+            			"Do you want to delete this ?", "Delete confirmation",
+            			JOptionPane.YES_NO_OPTION);
+            	
+            	if(option == JOptionPane.YES_OPTION) {
+    				if (products != null) {
+    					try {
+    						int position = model.indexOf(products, 0);
+    						delegate.delete(products);
 
-						clearComponents();
-						removeFromListModel(position);
+    						clearComponents();
+    						removeFromListModel(position);
 
-					} catch (TEBusinessException ex) {
-						helper.log(LogLevel.ERROR,
-								"Exception occured while saving Data.class.."
-								+ ex.getMessage());
-					}
-				}
+    					} catch (TEBusinessException ex) {
+    						helper.log(LogLevel.ERROR,
+    								"Exception occured while saving Data.class.."
+    								+ ex.getMessage());
+    					}
+    				}	
+            	}
 			}
 
 
