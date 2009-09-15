@@ -17,6 +17,7 @@ import ca.sait.oosd.logger.LogLevel;
 import ca.sait.oosd.logger.LoggerHelper;
 import ca.sait.oosd.models.PackagesProductsSuppliersDataTableModel;
 import ca.sait.oosd.models.ProductSupplierDataTableModel;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -35,7 +36,6 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
@@ -67,6 +67,7 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
     private Vector<PackagesProductsSuppliers> packagesProductsSuppliersVector;
 
     private JTable productSupplierTable;
+    private JTable packageProductSupplierTable;
     private PackageDragList packagesList;
     private ImageButton relationshipButton;
     private ImageButton deleteButton;
@@ -188,7 +189,7 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
 				6, 6);
 
         //generate the package product supplier data table
-        JTable packageProductSupplierTable = new JTable(packagesProductsSuppliersDataTableModel);
+        packageProductSupplierTable = new JTable(packagesProductsSuppliersDataTableModel);
         packageProductSupplierTable.setFillsViewportHeight(true);
         packageProductSupplierTable.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 
@@ -238,6 +239,36 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
                         JOptionPane.INFORMATION_MESSAGE);
 
             }
+        } else if(e.getActionCommand().equals(DELETE)) {
+        	if(packageProductSupplierTable.getSelectedRow() != -1) {
+            	int option = JOptionPane.showConfirmDialog(PackagesProductsSuppliersGUI.this,
+            			"Do you want to delete this ?", "Delete confirmation",
+            			JOptionPane.YES_NO_OPTION); 
+            	
+            	if(option == JOptionPane.YES_OPTION) {
+            		int[] selectedItems = packageProductSupplierTable.getSelectedRows();
+            		for(int row = 0; row < selectedItems.length; row++) {
+            			PackagesProductsSuppliers packagesProductsSupplier = (PackagesProductsSuppliers) 
+            				packagesProductsSuppliersDataTableModel.getSelectedValue(selectedItems[row]);
+            			
+            			try {
+							delegate.delete(packagesProductsSupplier);
+							packagesProductsSuppliersDataTableModel.removeRelationship(packagesProductsSupplier);
+							
+						} catch (TEBusinessException ex) {
+							helper.log(LogLevel.ERROR, "Exception occured while deleting..." + ex.getMessage());
+							JOptionPane.showMessageDialog(PackagesProductsSuppliersGUI.this, 
+									"Exception occured while deleting...", "Error", JOptionPane.ERROR_MESSAGE);
+							
+						}
+            		}
+            	}
+            	
+        	} else {
+        		JOptionPane.showMessageDialog(PackagesProductsSuppliersGUI.this, "You need to select valid rows to delete", 
+        				"Error", JOptionPane.WARNING_MESSAGE);
+        		
+        	}
         }
     }
 
