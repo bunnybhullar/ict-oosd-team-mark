@@ -55,7 +55,7 @@ public class ProductsGUI extends TEJFrame {
 	private final int HEIGHT = 300;
 	
 	public ProductsGUI() {
-		super();
+		super("Products");
 
 		delegate = new TEBusinessDelegateImpl();
 		productCollection = delegate.getProductsCollection();

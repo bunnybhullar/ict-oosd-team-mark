@@ -23,7 +23,9 @@ import javax.swing.JPanel;
  */
 public class NavigationButtonPanel extends JPanel{
 
-    private ImageButton supplierButton;
+	private static final long serialVersionUID = 1L;
+	
+	private ImageButton supplierButton;
     private ImageButton productButton;
     private ImageButton packageButton;
     private ImageButton agentButton;

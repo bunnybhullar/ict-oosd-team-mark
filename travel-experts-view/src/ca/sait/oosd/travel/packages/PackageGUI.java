@@ -65,7 +65,7 @@ public class PackageGUI extends TEJFrame {
 
 
 	public PackageGUI() {
-        super();
+        super("Packages");
 
         delegate = new TEBusinessDelegateImpl();
         packageCollection = delegate.getPackageCollection();
@@ -200,19 +200,17 @@ public class PackageGUI extends TEJFrame {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(packages != null) {
-                    try {
-                        int position = model.indexOf(packages, 0);
-                        delegate.delete(packages);
+            	try {
+            		int position = model.indexOf(packages, 0);
+            		delegate.delete(packages);
 
-                        clearComponents();
-                        removeFromListModel(position);
+            		clearComponents();
+            		removeFromListModel(position);
 
-                    } catch (TEBusinessException ex) {
-                        helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
-                        
-                    }
-                }
+            	} catch (TEBusinessException ex) {
+            		helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
+
+            	}
             }
         });
 

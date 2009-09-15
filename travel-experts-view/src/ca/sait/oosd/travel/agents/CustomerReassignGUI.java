@@ -61,7 +61,7 @@ public class CustomerReassignGUI extends TEJFrame implements ActionListener{
 
 
     public CustomerReassignGUI() {
-        super();
+        super("Reassign Customer");
 
         delegate = new TEBusinessDelegateImpl();
         customerCollection = delegate.getCustomersCollection();

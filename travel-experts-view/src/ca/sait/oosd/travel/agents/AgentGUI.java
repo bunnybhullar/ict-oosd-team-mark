@@ -62,7 +62,7 @@ public class AgentGUI extends TEJFrame {
 	private final int HEIGHT = 500;	
 	
 	public AgentGUI() {
-		super();
+		super("Agents");
 
 		delegate = new TEBusinessDelegateImpl();
 		agentCollection = delegate.getAgentCollection();
