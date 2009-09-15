@@ -20,11 +20,14 @@ import ca.sait.oosd.logger.LoggerHelper;
 import ca.sait.oosd.models.ProductSupplierDataTableModel;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Collection;
 
 import java.util.Vector;
+
+import javax.swing.Box;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -61,17 +64,18 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
     private DragList productList;
     private DropList supplierList;
     private ImageButton relationshipButton;
+    private ImageButton deleteButton;
 
     private final String ADD = "ADD";
     private final String DELETE = "DELETE";
     
     private final int WIDTH = 850;
-	private final int HEIGHT = 500;    
+	private final int HEIGHT = 700;    
 
 
     //default constructor
     public ProductSupplierGUI() {
-        super();
+        super("Products Suppliers");
 
         delegate = new TEBusinessDelegateImpl();
         poductsSuppliersCollection = delegate.getProductSuppliersCollection();
@@ -85,8 +89,13 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
         relationshipButton = new ImageButton("resources/cup.gif", "Relationship", 70, 120);
         relationshipButton.setActionCommand(ADD);
         relationshipButton.addActionListener(this);
+        
+        deleteButton = new ImageButton("resources/cup.gif", "Delete", 70, 120);
+        deleteButton.setActionCommand(DELETE);
+        deleteButton.addActionListener(this);
 
         this.initGUI();
+        this.adjustSize(WIDTH, HEIGHT);
         super.alignFrameOnScreen(WIDTH, HEIGHT);
 
     }
@@ -123,16 +132,23 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
 		supplierList.setVisibleRowCount(-1);
 
 		JScrollPane productListScroller = new JScrollPane(productList);
-		productListScroller.setPreferredSize(new Dimension(250, 80));
+		productListScroller.setPreferredSize(new Dimension(400, 200));
+		productListScroller.setMaximumSize(new Dimension(400, 200));
+		productListScroller.setMinimumSize(new Dimension(400, 200));
 
 		JScrollPane supplierListScroller = new JScrollPane(supplierList);
-		supplierListScroller.setPreferredSize(new Dimension(250, 80));
+		supplierListScroller.setPreferredSize(new Dimension(400, 200));
+		supplierListScroller.setMaximumSize(new Dimension(400, 200));
+		supplierListScroller.setMinimumSize(new Dimension(400, 200));
 
         JPanel listPanel = new JPanel(new SpringLayout());
         listPanel.add(productListScroller);
         listPanel.add(supplierListScroller);
         listPanel.add(new JLabel(""));
-        listPanel.add(relationshipButton);
+        
+        JPanel relationButtonPane = new JPanel();
+        relationButtonPane.add(relationshipButton);
+        listPanel.add(relationButtonPane);
 
         SpringUtilities.makeCompactGrid(listPanel,
 				2, 2,
@@ -144,17 +160,30 @@ public class ProductSupplierGUI extends TEJFrame implements ActionListener{
         productSupplierTable.setFillsViewportHeight(true);
 
         JScrollPane productSupplierScrollPane = new JScrollPane(productSupplierTable);
+        productSupplierScrollPane.setPreferredSize(new Dimension(800, 200));
+        productSupplierScrollPane.setMaximumSize(new Dimension(800, 200));
+        productSupplierScrollPane.setMinimumSize(new Dimension(800, 200));
+        
+        Box southPane = Box.createVerticalBox();
+        southPane.add(productSupplierScrollPane);
+        JPanel deleteButtonPane = new JPanel();
+        deleteButtonPane.add(deleteButton);
+        southPane.add(deleteButtonPane);
+        
+        JPanel centerPane = new JPanel(new FlowLayout());
+        centerPane.add(listPanel);
+        centerPane.add(southPane);
         
         this.getContentPane().add(new NavigationButtonPanel(TravelParts.PRODUCTSUPPLIER), BorderLayout.NORTH);
-        this.getContentPane().add(listPanel, BorderLayout.CENTER);
-        this.getContentPane().add(productSupplierScrollPane, BorderLayout.SOUTH);
+        this.getContentPane().add(centerPane, BorderLayout.CENTER);
 
 
     }
 
     @Override
     protected void adjustSize(int width, int height) {
-        
+    	this.setSize(new Dimension(width, height));
+    	
     }
 
     //perform the button action here

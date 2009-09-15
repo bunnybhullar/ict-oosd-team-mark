@@ -4,24 +4,35 @@ import ca.sait.oosd.SpringUtilities;
 import ca.sait.oosd.TravelParts;
 import ca.sait.oosd.business.TEBusinessDelegate;
 import ca.sait.oosd.business.TEBusinessDelegateImpl;
+import ca.sait.oosd.business.TEBusinessException;
 import ca.sait.oosd.components.NavigationButtonPanel;
 import ca.sait.oosd.components.TEJFrame;
+import ca.sait.oosd.components.Validator;
+import ca.sait.oosd.components.ValidatorException;
 import ca.sait.oosd.hibernate.Suppliers;
 import ca.sait.oosd.logger.LogLevel;
 import ca.sait.oosd.logger.LoggerHelper;
+
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collection;
+
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.SpringLayout;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 /**
 * This code was edited or generated using CloudGarden's Jigloo
@@ -43,27 +54,29 @@ public class SuppliersGUI extends TEJFrame {
 
 	private static final long serialVersionUID = 1L;
     private LoggerHelper helper = new LoggerHelper(SuppliersGUI.class.getName());
-    Collection<Suppliers> supplierCollection;
+    private Collection<Suppliers> supplierCollection;
     private TEBusinessDelegate delegate;
+    private Suppliers suppliers;
+    private DefaultListModel model;
+	private JTextField supplierIdTextField = new JTextField(10);
+	private JTextField supplierNameTextField = new JTextField(20);
+
     
     private final int WIDTH = 850;
-	private final int HEIGHT = 500;       
+	private final int HEIGHT = 300;       
 
     public SuppliersGUI() {
-        super();
+        super("Suppliers");
 
         delegate = new TEBusinessDelegateImpl();
         supplierCollection = delegate.getSuppliersCollection();
+        model = new DefaultListModel();
         
         this.initGUI();
-        this.alignFrameOnScreen(WIDTH, HEIGHT);
+        this.adjustSize(WIDTH, HEIGHT);
+        super.alignFrameOnScreen(WIDTH, HEIGHT);
         
     }
-    
-	@Override
-	protected void adjustSize(int width, int height) {
-
-	}
 
 	@Override
 	protected void initGUI() {
@@ -71,27 +84,33 @@ public class SuppliersGUI extends TEJFrame {
 
 		this.setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-
-		String[] labels = {"Supplier ID", "Supplier Name"};
+		
+        //list to display the data
+        for(Suppliers suppliers : supplierCollection) {
+            model.addElement(suppliers);
+        }
+        
 		JPanel dataEntryPane = new JPanel(new SpringLayout());
-		for (String label : labels) {
-			JLabel l = new JLabel(label, JLabel.TRAILING);
-			dataEntryPane.add(l);
-			JTextField textField = new JTextField(10);
-			l.setLabelFor(textField);
-			dataEntryPane.add(textField);
-			pack();
-		}
+		dataEntryPane.add(new JLabel("Supplier ID", JLabel.TRAILING));
+		supplierIdTextField.setEnabled(false);
+		dataEntryPane.add(supplierIdTextField);
+		dataEntryPane.add(new JLabel("Supplier Name", JLabel.TRAILING));
+		dataEntryPane.add(supplierNameTextField);
 
-		SpringUtilities.makeCompactGrid(dataEntryPane,
-				labels.length, 2,
+        SpringUtilities.makeCompactGrid(dataEntryPane,
+				2, 2,
 				6, 6,
-				6, 6);
+				6, 6);		
 
+		GridLayout grid = new GridLayout(2, 1);
+		JPanel centerPane = new JPanel();
+		centerPane.setLayout(grid);
+		centerPane.add(dataEntryPane);
+		
 		//list to display the data
-		JList list = new JList(supplierCollection.toArray());
+		final JList list = new JList(model);
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
 
 		JScrollPane listScroller = new JScrollPane(list);
@@ -108,38 +127,138 @@ public class SuppliersGUI extends TEJFrame {
 		southPane.add(clearButton);
 		southPane.add(deleteButton);
 
-		JPanel northPane = new JPanel();
-		JButton productButton = new JButton("Product");
-		JButton supplierButton = new JButton("Supplier");
-		JButton packageButton = new JButton("Package");
-		JButton psupplierButton = new JButton("Product Supplier");
-		JButton ppsupplierButton = new JButton("Package Product Supplier");
-		JButton mmenuButton = new JButton("Main Menu");
-		northPane.add(productButton);
-		northPane.add(supplierButton);
-		northPane.add(packageButton);
-		northPane.add(psupplierButton);
-		northPane.add(ppsupplierButton);
-		northPane.add(mmenuButton);
+		this.getContentPane().add(new NavigationButtonPanel(TravelParts.SUPPLIER), BorderLayout.NORTH);
+        this.getContentPane().add(centerPane, BorderLayout.CENTER);
+        this.getContentPane().add(listScroller, BorderLayout.EAST);
+        this.getContentPane().add(southPane, BorderLayout.SOUTH);
+        
+        //add the listener to the list
+		ListSelectionModel selectionModel = list.getSelectionModel();
+		selectionModel.addListSelectionListener(new ListSelectionListener() {
 
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				 suppliers = (Suppliers)list.getSelectedValue();
+				supplierIdTextField.setText(Long.toString(suppliers.getSupplierid()));
+				supplierNameTextField.setText(suppliers.getSupname());
+				supplierIdTextField.setEnabled(false);
+			}
+			
+		});
 
+		//Clear the content of the data entry
+		clearButton.addActionListener(new ActionListener()  {
 
-		GridLayout grid = new GridLayout(2, 1);
-		JPanel centerPane = new JPanel();
-		centerPane.setLayout(grid);
-		//centerPane.add(northPane, JPanel.TOP_ALIGNMENT);
-		centerPane.add(dataEntryPane);
-		centerPane.add(southPane, JPanel.BOTTOM_ALIGNMENT);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					clearComponents();
+			}
+		});
 
-		JPanel mainPane = new JPanel(new BorderLayout());
-		mainPane.add(new NavigationButtonPanel(TravelParts.SUPPLIER), BorderLayout.NORTH);
-		mainPane.add(centerPane, BorderLayout.CENTER);
-		mainPane.add(listScroller, BorderLayout.EAST);
+		
+		//Add new records to the database
+		addButton.addActionListener(new ActionListener()
+		{
 
-        this.getContentPane().add(mainPane, BorderLayout.CENTER);
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try{
+					validateForm();
+					
+					suppliers = new Suppliers();
+					suppliers.setSupname(supplierNameTextField.getText().trim());
+					
+					suppliers = (Suppliers)delegate.save(suppliers);
+					
+					model.addElement(suppliers);
+					clearComponents();
+					
+				}catch (TEBusinessException ex){
+					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + ex.getMessage());
+					
+				} catch (ValidatorException ex) {
+                	helper.log(LogLevel.ERROR, "Validation exception occured..." + ex.getMessage());
+					JOptionPane.showMessageDialog(SuppliersGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
 
+		//delete records from the database
+		deleteButton.addActionListener(new ActionListener()  {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try{
+					int position = model.indexOf(suppliers, 0);
+					delegate.delete(suppliers);
+
+					clearComponents();
+					removeFromListModel(position);
+
+				}catch (TEBusinessException ex){
+					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + ex.getMessage());
+
+				}
+			}
+		});
+
+		//update records from the user interface
+		updateButton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {				
+				try{
+					validateForm();
+					
+					suppliers = new Suppliers();
+					suppliers.setSupplierid(Long.parseLong(supplierIdTextField.getText()));
+					suppliers.setSupname(supplierNameTextField.getText().trim());
+					
+					suppliers = (Suppliers)delegate.update(suppliers);
+					updateListModel(suppliers);
+					
+				} catch (TEBusinessException e1) {
+					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + e1.getMessage());
+					
+				} catch (ValidatorException ex) {
+                	helper.log(LogLevel.ERROR, "Validation exception occured..." + ex.getMessage());
+					JOptionPane.showMessageDialog(SuppliersGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+
+		
 	}
-
-
+	
+	protected void clearComponents() {
+		supplierIdTextField.setText("");
+		supplierNameTextField.setText("");
+	}
+	
+	private void validateForm() throws ValidatorException{
+		Validator.isEmptyString("Supplier Name", supplierNameTextField.getText());
+		
+	}
+	
+    private void removeFromListModel(int position) {
+        model.removeElementAt(position);
+        
+    }
+    
+	//update the list model when user update a record from the user interface
+	protected void updateListModel(Suppliers suppliers) {
+		for(Suppliers sup : supplierCollection){
+			if(sup.getSupplierid() == suppliers.getSupplierid()){
+				int position = model.indexOf(sup, 0);
+				model.set(position, suppliers);
+			}
+		}
+	}    
+	
+	@Override
+	protected void adjustSize(int width, int height) {
+		this.setSize(new Dimension(width, height));
+		
+	}	
 
 }

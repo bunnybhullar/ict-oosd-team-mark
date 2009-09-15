@@ -9,10 +9,9 @@ import javax.swing.JFrame;
 public abstract class TEJFrame extends JFrame{
 
 	private static final long serialVersionUID = 1L;
-//	private int width = 600;
-//	private int height = 400;
 	
-	public TEJFrame() {
+	public TEJFrame(String title) {
+		super("Travel Experts :: " + title);
 		initComponent();
 	}
 	
@@ -39,14 +38,6 @@ public abstract class TEJFrame extends JFrame{
 		
 		this.setLocation(x, y);
 	}
-
-/*    public void setHeight(int height) {
-        this.height = height;
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
-    }*/
 	
 	protected abstract void initGUI();
 	protected abstract void adjustSize(int width, int height);

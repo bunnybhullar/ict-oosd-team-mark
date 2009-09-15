@@ -42,7 +42,7 @@ public class StartupScreen extends TEJFrame {
 
     //default constructor
     public StartupScreen() {
-        super();
+        super("Welcome");
 
         //create the buttons with a image
         exitButton = new ImageButton("resources/cup.gif", "Exit", 75, 175);

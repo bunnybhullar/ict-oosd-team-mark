@@ -79,7 +79,7 @@ public class PackagesProductsSuppliersGUI extends TEJFrame implements ActionList
 
 
     public PackagesProductsSuppliersGUI() {
-        super();
+        super("Packages Products Suppliers");
 
         delegate = new TEBusinessDelegateImpl();
 
