@@ -45,11 +45,11 @@ public class StartupScreen extends TEJFrame {
         super("Welcome");
 
         //create the buttons with a image
-        exitButton = new ImageButton("resources/cup.gif", "Exit", 75, 175);
-        supplierButton = new ImageButton("resources/cup.gif", "Supplier", 75, 175);
-        productButton = new ImageButton("resources/cup.gif", "Product", 75, 175);
-        packageButton = new ImageButton("resources/cup.gif", "Package", 75, 175);
-        agentButton = new ImageButton("resources/cup.gif", " Agent  ", 75, 175);
+        exitButton = new ImageButton("resources/cancel.png", "Exit", 75, 175);
+        supplierButton = new ImageButton("resources/supplier.png", "Supplier", 75, 175);
+        productButton = new ImageButton("resources/product.png", "Product", 75, 175);
+        packageButton = new ImageButton("resources/package.png", "Package", 75, 175);
+        agentButton = new ImageButton("resources/agent.png", " Agent  ", 75, 175);
 
         this.initGUI();
         this.adjustSize(WIDTH, HEIGHT);
