@@ -206,25 +206,32 @@ public class PackageGUI extends TEJFrame {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-            	int option = JOptionPane.showConfirmDialog(PackageGUI.this,
-            			"Do you want to delete this ?", "Delete confirmation",
-            			JOptionPane.YES_NO_OPTION);
-            	
-            	if(option == JOptionPane.YES_OPTION) {
-                	try {
-                		int position = model.indexOf(packages, 0);
-                		delegate.delete(packages);
+            	if(list.getSelectedIndex() != -1) {
+                	int option = JOptionPane.showConfirmDialog(PackageGUI.this,
+                			"Do you want to delete this ?", "Delete confirmation",
+                			JOptionPane.YES_NO_OPTION);
+                	
+                	if(option == JOptionPane.YES_OPTION) {
+                    	try {
+                    		int position = model.indexOf(packages, 0);
+                    		delegate.delete(packages);
 
-                		clearComponents();
-                		removeFromListModel(position);
-                		
-    					JOptionPane.showMessageDialog(PackageGUI.this, "The selected package removed successfully", 
-    							"Successful", JOptionPane.INFORMATION_MESSAGE);   
+                    		clearComponents();
+                    		removeFromListModel(position);
+                    		
+        					JOptionPane.showMessageDialog(PackageGUI.this, "The selected package removed successfully", 
+        							"Successful", JOptionPane.INFORMATION_MESSAGE);   
 
-                	} catch (TEBusinessException ex) {
-                		helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
+                    	} catch (TEBusinessException ex) {
+                    		helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
 
-                	}
+                    	}
+                	}	
+                	
+            	} else {
+            		JOptionPane.showMessageDialog(PackageGUI.this, "You need to select a valid item from the list to delete", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);   
+            		
             	}
             }
         });
@@ -233,31 +240,38 @@ public class PackageGUI extends TEJFrame {
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                	validateForm();
-                	
-                    packages = new Packages();
-                    packages.setPackageid(Long.parseLong(packageIdTextField.getText()));
-                    packages.setPkgname(packageNameTextField.getText().trim());
-                    packages.setPkgdesc(descriptionTextField.getText().trim());
-                    packages.setPkgbaseprice(new BigDecimal(basePriceTextField.getText().trim()));
-                    packages.setPkgagencycommission(new BigDecimal(commissionTextField.getText().trim()));
-                    packages.setPkgstartdate(startDate.getDate());
-                    packages.setPkgenddate(endDate.getDate());
+            	if(list.getSelectedIndex() != -1) {
+                    try {
+                    	validateForm();
+                    	
+                        packages = new Packages();
+                        packages.setPackageid(Long.parseLong(packageIdTextField.getText()));
+                        packages.setPkgname(packageNameTextField.getText().trim());
+                        packages.setPkgdesc(descriptionTextField.getText().trim());
+                        packages.setPkgbaseprice(new BigDecimal(basePriceTextField.getText().trim()));
+                        packages.setPkgagencycommission(new BigDecimal(commissionTextField.getText().trim()));
+                        packages.setPkgstartdate(startDate.getDate());
+                        packages.setPkgenddate(endDate.getDate());
 
-                    packages = (Packages)delegate.update(packages);
-                    updateListModel(packages);
+                        packages = (Packages)delegate.update(packages);
+                        updateListModel(packages);
+                        
+    					JOptionPane.showMessageDialog(PackageGUI.this, "The selected package updated successfully", 
+    							"Successful", JOptionPane.INFORMATION_MESSAGE);   
+
+                    } catch (TEBusinessException ex) {
+                        helper.log(LogLevel.ERROR, "Exception occured while saving data..." + ex.getMessage());
+
+                    } catch (ValidatorException ex) {
+                    	helper.log(LogLevel.ERROR, "Validation exception occured..." + ex.getMessage());
+    					JOptionPane.showMessageDialog(PackageGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    				}
                     
-					JOptionPane.showMessageDialog(PackageGUI.this, "The selected package updated successfully", 
-							"Successful", JOptionPane.INFORMATION_MESSAGE);   
-
-                } catch (TEBusinessException ex) {
-                    helper.log(LogLevel.ERROR, "Exception occured while saving data..." + ex.getMessage());
-
-                } catch (ValidatorException ex) {
-                	helper.log(LogLevel.ERROR, "Validation exception occured..." + ex.getMessage());
-					JOptionPane.showMessageDialog(PackageGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-				}
+            	} else {
+            		JOptionPane.showMessageDialog(PackageGUI.this, "You need to select a valid item from the list to update", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);  
+            		
+            	}
             }
         });
 

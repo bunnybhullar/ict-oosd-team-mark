@@ -186,29 +186,36 @@ public class ProductsGUI extends TEJFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-            	int option = JOptionPane.showConfirmDialog(ProductsGUI.this,
-            			"Do you want to delete this ?", "Delete confirmation",
-            			JOptionPane.YES_NO_OPTION);
-            	
-            	if(option == JOptionPane.YES_OPTION) {
-    				if (products != null) {
-    					try {
-    						int position = model.indexOf(products, 0);
-    						delegate.delete(products);
+				if(list.getSelectedIndex() != -1) {
+	            	int option = JOptionPane.showConfirmDialog(ProductsGUI.this,
+	            			"Do you want to delete this ?", "Delete confirmation",
+	            			JOptionPane.YES_NO_OPTION);
+	            	
+	            	if(option == JOptionPane.YES_OPTION) {
+	    				if (products != null) {
+	    					try {
+	    						int position = model.indexOf(products, 0);
+	    						delegate.delete(products);
 
-    						clearComponents();
-    						removeFromListModel(position);
-    						
-        					JOptionPane.showMessageDialog(ProductsGUI.this, "The selected product removed successfully", 
-        							"Successful", JOptionPane.INFORMATION_MESSAGE);  
+	    						clearComponents();
+	    						removeFromListModel(position);
+	    						
+	        					JOptionPane.showMessageDialog(ProductsGUI.this, "The selected product removed successfully", 
+	        							"Successful", JOptionPane.INFORMATION_MESSAGE);  
 
-    					} catch (TEBusinessException ex) {
-    						helper.log(LogLevel.ERROR,
-    								"Exception occured while saving Data.class.."
-    								+ ex.getMessage());
-    					}
-    				}	
-            	}
+	    					} catch (TEBusinessException ex) {
+	    						helper.log(LogLevel.ERROR,
+	    								"Exception occured while saving Data.class.."
+	    								+ ex.getMessage());
+	    					}
+	    				}	
+	            	}
+	            	
+				} else {
+					JOptionPane.showMessageDialog(ProductsGUI.this, "You need to select a valid item from the list to delete", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);
+					
+				}
 			}
 
 
@@ -219,27 +226,34 @@ public class ProductsGUI extends TEJFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					validateForm();
+				if(list.getSelectedIndex() != -1) {
+					try {
+						validateForm();
 
-					products = new Products();
-					products.setProductid(Long.parseLong(productIdTextField.getText()));
-					products.setProdname(productNameTextField.getText().trim());
-					// try {
-					products = (Products) delegate.update(products);
-					updateListModel(products);
+						products = new Products();
+						products.setProductid(Long.parseLong(productIdTextField.getText()));
+						products.setProdname(productNameTextField.getText().trim());
+						// try {
+						products = (Products) delegate.update(products);
+						updateListModel(products);
+						
+						JOptionPane.showMessageDialog(ProductsGUI.this, "The selected product updated successfully", 
+								"Successful", JOptionPane.INFORMATION_MESSAGE);  
+
+					} catch (TEBusinessException e1) {
+						// TODO Auto-generated catch block
+						helper.log(LogLevel.ERROR,
+								"Exception occured while saving Data.class.."
+								+ e1.getMessage());
+					} catch (ValidatorException ex) {
+						helper.log(LogLevel.ERROR, "Validation exception occured..." + ex.getMessage());
+						JOptionPane.showMessageDialog(ProductsGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
 					
-					JOptionPane.showMessageDialog(ProductsGUI.this, "The selected product updated successfully", 
-							"Successful", JOptionPane.INFORMATION_MESSAGE);  
-
-				} catch (TEBusinessException e1) {
-					// TODO Auto-generated catch block
-					helper.log(LogLevel.ERROR,
-							"Exception occured while saving Data.class.."
-							+ e1.getMessage());
-				} catch (ValidatorException ex) {
-					helper.log(LogLevel.ERROR, "Validation exception occured..." + ex.getMessage());
-					JOptionPane.showMessageDialog(ProductsGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(ProductsGUI.this, "You need to select a valid item from the list to update", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);
+					
 				}
 			}
 		});
