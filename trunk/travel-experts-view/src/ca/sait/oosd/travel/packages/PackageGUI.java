@@ -24,6 +24,7 @@ import ca.sait.oosd.components.TEJFrame;
 import ca.sait.oosd.logger.LoggerHelper;
 import ca.sait.oosd.hibernate.Packages;
 import ca.sait.oosd.logger.LogLevel;
+
 import java.awt.Dimension;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
@@ -185,6 +186,8 @@ public class PackageGUI extends TEJFrame {
 
                     clearComponents();
 
+					JOptionPane.showMessageDialog(PackageGUI.this, "New Package added successfully", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);
                     
                 } catch (TEBusinessException ex) {
                     helper.log(LogLevel.ERROR, "Exception occured while saving data..." + ex.getMessage());
@@ -211,6 +214,9 @@ public class PackageGUI extends TEJFrame {
 
                 		clearComponents();
                 		removeFromListModel(position);
+                		
+    					JOptionPane.showMessageDialog(PackageGUI.this, "The selected package removed successfully", 
+    							"Successful", JOptionPane.INFORMATION_MESSAGE);   
 
                 	} catch (TEBusinessException ex) {
                 		helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
@@ -238,6 +244,9 @@ public class PackageGUI extends TEJFrame {
 
                     packages = (Packages)delegate.update(packages);
                     updateListModel(packages);
+                    
+					JOptionPane.showMessageDialog(PackageGUI.this, "The selected package updated successfully", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);   
 
                 } catch (TEBusinessException ex) {
                     helper.log(LogLevel.ERROR, "Exception occured while saving data..." + ex.getMessage());

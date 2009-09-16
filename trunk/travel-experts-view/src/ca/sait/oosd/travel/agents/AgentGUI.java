@@ -191,6 +191,9 @@ public class AgentGUI extends TEJFrame {
                     model.addElement(agents);
                     clearComponents();
                     
+					JOptionPane.showMessageDialog(AgentGUI.this, "New Agent added successfully", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);
+                    
                 } catch (TEBusinessException ex) {
                     helper.log(LogLevel.ERROR, "Exception occured while saving data..." + ex.getMessage());
                     
@@ -208,14 +211,28 @@ public class AgentGUI extends TEJFrame {
                		"agents clients to a new agent. Would you" +
                		" like to continue?", "Warning", JOptionPane.OK_CANCEL_OPTION);
                
-               if (selection==0) {
-//            	   System.out.print("open the new window");  
-            	   new CustomerReassignGUI();
-            	   
+               if (selection == JOptionPane.YES_OPTION) {
+            	   if(agents != null) {
+            		   try {
+            			   int position = model.indexOf(agents, 0);
+            			   delegate.delete(agents);
+
+            			   new CustomerReassignGUI();
+
+            			   clearComponents();
+            			   //        removeFromListModel(position);
+
+            		   } catch (TEBusinessException ex) {
+            			   helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
+
+            		   }
+            	   }
+
+
                }
                
             	
-            	if(agents != null) {
+/*            	if(agents != null) {
                     try {
                         int position = model.indexOf(agents, 0);
                         delegate.delete(agents);
@@ -227,7 +244,7 @@ public class AgentGUI extends TEJFrame {
                         helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
                         
                     }
-                }
+                }*/
             }
         });      
         
@@ -249,6 +266,9 @@ public class AgentGUI extends TEJFrame {
 
                     agents = (Agents) delegate.update(agents);
 //                    updateListModel(agents);
+                    
+					JOptionPane.showMessageDialog(AgentGUI.this, "The selected agent updated successfully", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);  
 
                 } catch (TEBusinessException ex) {
                     helper.log(LogLevel.ERROR, "Exception occured while saving data..." + ex.getMessage());
