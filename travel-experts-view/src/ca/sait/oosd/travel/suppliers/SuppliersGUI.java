@@ -194,26 +194,33 @@ public class SuppliersGUI extends TEJFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-            	int option = JOptionPane.showConfirmDialog(SuppliersGUI.this,
-            			"Do you want to delete this ?", "Delete confirmation",
-            			JOptionPane.YES_NO_OPTION);
-            	
-            	if(option == JOptionPane.YES_OPTION) {
-    				try{
-    					int position = model.indexOf(suppliers, 0);
-    					delegate.delete(suppliers);
+				if(list.getSelectedIndex() != -1) {
+	            	int option = JOptionPane.showConfirmDialog(SuppliersGUI.this,
+	            			"Do you want to delete this ?", "Delete confirmation",
+	            			JOptionPane.YES_NO_OPTION);
+	            	
+	            	if(option == JOptionPane.YES_OPTION) {
+	    				try{
+	    					int position = model.indexOf(suppliers, 0);
+	    					delegate.delete(suppliers);
 
-    					clearComponents();
-    					removeFromListModel(position);
-    					
-    					JOptionPane.showMessageDialog(SuppliersGUI.this, "The selected supplier removed successfully", 
-    							"Successful", JOptionPane.INFORMATION_MESSAGE);    					
+	    					clearComponents();
+	    					removeFromListModel(position);
+	    					
+	    					JOptionPane.showMessageDialog(SuppliersGUI.this, "The selected supplier removed successfully", 
+	    							"Successful", JOptionPane.INFORMATION_MESSAGE);    					
 
-    				}catch (TEBusinessException ex){
-    					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + ex.getMessage());
+	    				}catch (TEBusinessException ex){
+	    					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + ex.getMessage());
 
-    				}	
-            	}
+	    				}	
+	            	}	
+	            	
+				} else {
+					JOptionPane.showMessageDialog(SuppliersGUI.this, "You need to select a valid item from the list to delete", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);  
+					
+				}
 			}
 		});
 
@@ -221,26 +228,32 @@ public class SuppliersGUI extends TEJFrame {
 		updateButton.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {				
-				try{
-					validateForm();
+			public void actionPerformed(ActionEvent e) {	
+				if(list.getSelectedIndex() != -1) {
+					try{
+						validateForm();
+						
+						suppliers = new Suppliers();
+						suppliers.setSupplierid(Long.parseLong(supplierIdTextField.getText()));
+						suppliers.setSupname(supplierNameTextField.getText().trim());
+						
+						suppliers = (Suppliers)delegate.update(suppliers);
+						updateListModel(suppliers);
+						
+						JOptionPane.showMessageDialog(SuppliersGUI.this, "The selected supplier updated successfully", 
+								"Successful", JOptionPane.INFORMATION_MESSAGE);  
+						
+					} catch (TEBusinessException e1) {
+						helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + e1.getMessage());
+						
+					} catch (ValidatorException ex) {
+	                	helper.log(LogLevel.ERROR, "Validation exception occured..." + ex.getMessage());
+						JOptionPane.showMessageDialog(SuppliersGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+					}
 					
-					suppliers = new Suppliers();
-					suppliers.setSupplierid(Long.parseLong(supplierIdTextField.getText()));
-					suppliers.setSupname(supplierNameTextField.getText().trim());
-					
-					suppliers = (Suppliers)delegate.update(suppliers);
-					updateListModel(suppliers);
-					
-					JOptionPane.showMessageDialog(SuppliersGUI.this, "The selected supplier updated successfully", 
-							"Successful", JOptionPane.INFORMATION_MESSAGE);  
-					
-				} catch (TEBusinessException e1) {
-					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + e1.getMessage());
-					
-				} catch (ValidatorException ex) {
-                	helper.log(LogLevel.ERROR, "Validation exception occured..." + ex.getMessage());
-					JOptionPane.showMessageDialog(SuppliersGUI.this, ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(SuppliersGUI.this, "You need to select a valid item from the list to update", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});

@@ -207,31 +207,36 @@ public class AgentGUI extends TEJFrame {
         deleteButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               int selection = JOptionPane.showConfirmDialog(AgentGUI.this, "Selecting this option will " +
-               		"de-activate this agent." +
-               		" You will be required to assign this " +
-               		"agents clients to a new agent. Would you" +
-               		" like to continue?", "Warning", JOptionPane.OK_CANCEL_OPTION);
-               
-               if (selection == JOptionPane.YES_OPTION) {
-            	   if(agents != null) {
-            		   try {
-            			   int position = model.indexOf(agents, 0);
-            			   delegate.delete(agents);
+            	if(list.getSelectedIndex() != -1) {
+                    int selection = JOptionPane.showConfirmDialog(AgentGUI.this, "Selecting this option will " +
+                       		"de-activate this agent." +
+                       		" You will be required to assign this " +
+                       		"agents clients to a new agent. Would you" +
+                       		" like to continue?", "Warning", JOptionPane.OK_CANCEL_OPTION);
+                       
+                    if (selection == JOptionPane.YES_OPTION) {
+                    	if(agents != null) {
+                    		try {
+                    			int position = model.indexOf(agents, 0);
+                    			delegate.delete(agents);
 
-            			   new CustomerReassignGUI();
+                    			new CustomerReassignGUI();
 
-            			   clearComponents();
-            			   //        removeFromListModel(position);
+                    			clearComponents();
+                    			//        removeFromListModel(position);
 
-            		   } catch (TEBusinessException ex) {
-            			   helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
+                    		} catch (TEBusinessException ex) {
+                    			helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
 
-            		   }
-            	   }
-
-
-               }
+                    		}
+                    	}
+                    }
+                    
+            	} else {
+            		JOptionPane.showMessageDialog(AgentGUI.this, "You need to select a valid item from the list to delete", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);   
+            		
+            	}
                
             	
 /*            	if(agents != null) {
@@ -254,28 +259,35 @@ public class AgentGUI extends TEJFrame {
         updateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                try {
-                	agents = (Agents)list.getSelectedValue();
-                    agents.setAgentid(Long.parseLong(agentIdTextField.getText()));
-                    agents.setAgtfirstname(agentFirstNameTextField.getText());
-                    agents.setAgtmiddleinitial(agentMiddleInitialTextField.getText());
-                    agents.setAgtmiddleinitial(agentMiddleInitialTextField.getText());
-                    agents.setAgtlastname(agentLastNameTextField.getText());
-                    agents.setAgtbusphone(agentBusPhoneTextField.getText());
-                    agents.setAgtemail(agentEmailTextField.getText());
-                    agents.setAgtposition(agentPositionTextField.getText());
-                    agents.setAgencies((Agencies)agencyIdCboBox.getSelectedItem());                    
+            	if(list.getSelectedIndex() != -1) {
+                    try {
+                    	agents = (Agents)list.getSelectedValue();
+                        agents.setAgentid(Long.parseLong(agentIdTextField.getText()));
+                        agents.setAgtfirstname(agentFirstNameTextField.getText());
+                        agents.setAgtmiddleinitial(agentMiddleInitialTextField.getText());
+                        agents.setAgtmiddleinitial(agentMiddleInitialTextField.getText());
+                        agents.setAgtlastname(agentLastNameTextField.getText());
+                        agents.setAgtbusphone(agentBusPhoneTextField.getText());
+                        agents.setAgtemail(agentEmailTextField.getText());
+                        agents.setAgtposition(agentPositionTextField.getText());
+                        agents.setAgencies((Agencies)agencyIdCboBox.getSelectedItem());                    
 
-                    agents = (Agents) delegate.update(agents);
-//                    updateListModel(agents);
+                        agents = (Agents) delegate.update(agents);
+//                        updateListModel(agents);
+                        
+    					JOptionPane.showMessageDialog(AgentGUI.this, "The selected agent updated successfully", 
+    							"Successful", JOptionPane.INFORMATION_MESSAGE);  
+
+                    } catch (TEBusinessException ex) {
+                        helper.log(LogLevel.ERROR, "Exception occured while saving data..." + ex.getMessage());
+
+                    }
                     
-					JOptionPane.showMessageDialog(AgentGUI.this, "The selected agent updated successfully", 
-							"Successful", JOptionPane.INFORMATION_MESSAGE);  
-
-                } catch (TEBusinessException ex) {
-                    helper.log(LogLevel.ERROR, "Exception occured while saving data..." + ex.getMessage());
-
-                }
+            	} else {
+            		JOptionPane.showMessageDialog(AgentGUI.this, "You need to select a valid item from the list to update", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE); 
+            		
+            	}
             }
         });
         
