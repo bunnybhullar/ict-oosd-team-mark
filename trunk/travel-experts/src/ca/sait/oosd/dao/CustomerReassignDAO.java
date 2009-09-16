@@ -2,10 +2,11 @@ package ca.sait.oosd.dao;
 
 import java.util.Collection;
 
+import ca.sait.oosd.business.TEObject;
 import ca.sait.oosd.hibernate.Agents;
 import ca.sait.oosd.hibernate.Customers;
 
-public class CustomerReassignDAO {
+public class CustomerReassignDAO extends TEObject{
 
 	private Collection<Customers> customerCollection;
 	private Agents agant;
@@ -16,6 +17,10 @@ public class CustomerReassignDAO {
 	
 	public void setCustomerCollection(Collection<Customers> customerCollection) {
 		this.customerCollection = customerCollection;
+	}
+	
+	public void setCustomer(Customers customer) {
+		this.customerCollection.add(customer);
 	}
 	
 	public Agents getAgant() {
@@ -30,6 +35,7 @@ public class CustomerReassignDAO {
 		return customerCollection.toArray();
 	}
 	
+	@Override
 	public String toString() {
 		return agant.getAgtfirstname() + ", " + agant.getAgtlastname();
 	}
