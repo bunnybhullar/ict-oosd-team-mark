@@ -12,7 +12,6 @@ import ca.sait.oosd.components.ValidatorException;
 import ca.sait.oosd.hibernate.Suppliers;
 import ca.sait.oosd.logger.LogLevel;
 import ca.sait.oosd.logger.LoggerHelper;
-import ca.sait.oosd.travel.packages.PackageGUI;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
@@ -174,6 +173,9 @@ public class SuppliersGUI extends TEJFrame {
 					model.addElement(suppliers);
 					clearComponents();
 					
+					JOptionPane.showMessageDialog(SuppliersGUI.this, "New Supplier added successfully", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);
+					
 				}catch (TEBusinessException ex){
 					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + ex.getMessage());
 					
@@ -200,6 +202,9 @@ public class SuppliersGUI extends TEJFrame {
 
     					clearComponents();
     					removeFromListModel(position);
+    					
+    					JOptionPane.showMessageDialog(SuppliersGUI.this, "The selected supplier removed successfully", 
+    							"Successful", JOptionPane.INFORMATION_MESSAGE);    					
 
     				}catch (TEBusinessException ex){
     					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + ex.getMessage());
@@ -223,6 +228,9 @@ public class SuppliersGUI extends TEJFrame {
 					
 					suppliers = (Suppliers)delegate.update(suppliers);
 					updateListModel(suppliers);
+					
+					JOptionPane.showMessageDialog(SuppliersGUI.this, "The selected supplier updated successfully", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);  
 					
 				} catch (TEBusinessException e1) {
 					helper.log(LogLevel.ERROR, "Exception occured while saving Data.class.." + e1.getMessage());

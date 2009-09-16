@@ -27,7 +27,6 @@ import ca.sait.oosd.components.Validator;
 import ca.sait.oosd.components.ValidatorException;
 import ca.sait.oosd.logger.LogLevel;
 import ca.sait.oosd.logger.LoggerHelper;
-import ca.sait.oosd.travel.packages.PackageGUI;
 import ca.sait.oosd.hibernate.Products;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -157,6 +156,9 @@ public class ProductsGUI extends TEJFrame {
 					products = (Products) delegate.save(products);
 					model.addElement(products);
 					clearComponents();
+					
+					JOptionPane.showMessageDialog(ProductsGUI.this, "New Product added successfully", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);
 
 				} catch (TEBusinessException ex) {				
 					helper.log(LogLevel.ERROR,
@@ -171,6 +173,7 @@ public class ProductsGUI extends TEJFrame {
 			}
 
 		});
+		
 		// delete records from the database
 		deleteButton.addActionListener(new ActionListener() {
 
@@ -188,6 +191,9 @@ public class ProductsGUI extends TEJFrame {
 
     						clearComponents();
     						removeFromListModel(position);
+    						
+        					JOptionPane.showMessageDialog(ProductsGUI.this, "The selected product removed successfully", 
+        							"Successful", JOptionPane.INFORMATION_MESSAGE);  
 
     					} catch (TEBusinessException ex) {
     						helper.log(LogLevel.ERROR,
@@ -215,6 +221,9 @@ public class ProductsGUI extends TEJFrame {
 					// try {
 					products = (Products) delegate.update(products);
 					updateListModel(products);
+					
+					JOptionPane.showMessageDialog(ProductsGUI.this, "The selected product updated successfully", 
+							"Successful", JOptionPane.INFORMATION_MESSAGE);  
 
 				} catch (TEBusinessException e1) {
 					// TODO Auto-generated catch block
