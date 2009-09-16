@@ -333,6 +333,8 @@ public class TEBusinessServiceImpl implements TEBusinessService {
 
 	@Override
 	public void reassignCustomerToAgent(Customers customer) {
+		session.beginTransaction();
+		
         session.merge(customer);
         session.flush();
         session.getTransaction().commit();		
