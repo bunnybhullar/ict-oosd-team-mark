@@ -31,6 +31,7 @@ import ca.sait.oosd.components.NavigationButtonPanel;
 import ca.sait.oosd.components.TEJFrame;
 import ca.sait.oosd.hibernate.Agencies;
 import ca.sait.oosd.hibernate.Agents;
+import ca.sait.oosd.hibernate.Packages;
 import ca.sait.oosd.logger.LogLevel;
 import ca.sait.oosd.logger.LoggerHelper;
 
@@ -223,7 +224,7 @@ public class AgentGUI extends TEJFrame {
                     			new CustomerReassignGUI();
 
                     			clearComponents();
-                    			//        removeFromListModel(position);
+                    			removeFromListModel(position);
 
                     		} catch (TEBusinessException ex) {
                     			helper.log(LogLevel.ERROR, "Exception occured while deleting data..." + ex.getMessage());
@@ -234,7 +235,7 @@ public class AgentGUI extends TEJFrame {
                     
             	} else {
             		JOptionPane.showMessageDialog(AgentGUI.this, "You need to select a valid item from the list to delete", 
-							"Successful", JOptionPane.INFORMATION_MESSAGE);   
+							"Invalid Selection", JOptionPane.INFORMATION_MESSAGE);   
             		
             	}
                
@@ -273,7 +274,7 @@ public class AgentGUI extends TEJFrame {
                         agents.setAgencies((Agencies)agencyIdCboBox.getSelectedItem());                    
 
                         agents = (Agents) delegate.update(agents);
-//                        updateListModel(agents);
+                        updateListModel(agents);
                         
     					JOptionPane.showMessageDialog(AgentGUI.this, "The selected agent updated successfully", 
     							"Successful", JOptionPane.INFORMATION_MESSAGE);  
@@ -285,7 +286,7 @@ public class AgentGUI extends TEJFrame {
                     
             	} else {
             		JOptionPane.showMessageDialog(AgentGUI.this, "You need to select a valid item from the list to update", 
-							"Successful", JOptionPane.INFORMATION_MESSAGE); 
+							"Invalid Selection", JOptionPane.INFORMATION_MESSAGE); 
             		
             	}
             }
@@ -319,5 +320,22 @@ public class AgentGUI extends TEJFrame {
 		this.setSize(new Dimension(width, height));
 		
 	}
+	
+    //update the list model when user update a record from the user interface
+    private void updateListModel(Agents _agent) {
+        for(Agents agent : agentCollection) {
+            if(agent.getAgentid() == _agent.getAgentid()) {
+                int position = model.indexOf(agent, 0);
+                model.set(position, agent);
+                
+            }
+        }
+        
+    }
+    
+    private void removeFromListModel(int position) {
+        model.removeElementAt(position);
+        
+    }
 
 }

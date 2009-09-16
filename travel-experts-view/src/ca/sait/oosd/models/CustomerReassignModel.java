@@ -58,11 +58,17 @@ public class CustomerReassignModel extends TERelationshipDataTableModel{
 	
 	@Override
 	public void addRelationship(TEObject teObject) {
+		customeReassignVector.add((CustomerReassignDAO)teObject);
+		
+		fireTableDataChanged();
 		
 	}	
 
 	@Override
 	public void removeRelationship(TEObject teObject) {
+		customeReassignVector.remove((CustomerReassignDAO)teObject);
+		
+		fireTableDataChanged();
 		
 	}
 
