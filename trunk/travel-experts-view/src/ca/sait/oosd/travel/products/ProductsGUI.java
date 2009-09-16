@@ -86,7 +86,11 @@ public class ProductsGUI extends TEJFrame {
         SpringUtilities.makeCompactGrid(dataEntryPane,
 				2, 2,
 				6, 6,
-				6, 6);		
+				6, 6);	
+        
+        for(Products product : productCollection) {
+        	model.addElement(product);
+        }
         
 		GridLayout grid = new GridLayout(2, 1);
 		JPanel centerPane = new JPanel();
