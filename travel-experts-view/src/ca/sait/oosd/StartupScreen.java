@@ -7,8 +7,6 @@ import ca.sait.oosd.logger.LogLevel;
 import ca.sait.oosd.logger.LoggerHelper;
 import ca.sait.oosd.travel.agents.AgentGUI;
 import ca.sait.oosd.travel.packages.PackageGUI;
-import ca.sait.oosd.travel.packages.PackagesProductsSuppliersGUI;
-import ca.sait.oosd.travel.products.ProductSupplierGUI;
 import ca.sait.oosd.travel.products.ProductsGUI;
 import ca.sait.oosd.travel.suppliers.SuppliersGUI;
 import java.awt.BorderLayout;
@@ -30,7 +28,9 @@ import javax.swing.JPanel;
  */
 public class StartupScreen extends TEJFrame {
 
-    private LoggerHelper helper = new LoggerHelper(StartupScreen.class.getName());
+	private static final long serialVersionUID = 1L;
+	
+	private LoggerHelper helper = new LoggerHelper(StartupScreen.class.getName());
     private ImageButton exitButton;
     private ImageButton supplierButton;
     private ImageButton productButton;

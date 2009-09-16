@@ -25,7 +25,6 @@ import java.util.Vector;
 import javax.swing.DefaultListModel;
 import javax.swing.DropMode;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -34,7 +33,7 @@ import javax.swing.SpringLayout;
 
 /**
  *
- * @author duminda
+ * @author Mark Southwell
  * @pupose The pupose of this GUI is to provide an interface reassign customers to new agents.
  * 
  */
