@@ -46,6 +46,7 @@ public class ProductsGUI extends TEJFrame {
 	Collection<Products> productCollection;
 	private TEBusinessDelegate delegate;
 	private Products products;
+	private JList list;
 	private DefaultListModel model;
 	private JTextField productIdTextField = new JTextField(20);
 	private JTextField productNameTextField = new JTextField(20);
@@ -99,7 +100,7 @@ public class ProductsGUI extends TEJFrame {
 		centerPane.add(dataEntryPane);        
 
 		// list to display the data
-		final JList list = new JList(productCollection.toArray());
+		list = new JList(productCollection.toArray());
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
@@ -129,11 +130,13 @@ public class ProductsGUI extends TEJFrame {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				products = (Products) list.getSelectedValue();
-				productIdTextField.setText(Long.toString(products
-						.getProductid()));
-				productNameTextField.setText(products.getProdname());
-				productIdTextField.setEnabled(false);
+				if(list.getSelectedIndex() != -1) {
+					products = (Products) list.getSelectedValue();
+					productIdTextField.setText(Long.toString(products
+							.getProductid()));
+					productNameTextField.setText(products.getProdname());
+					productIdTextField.setEnabled(false);	
+				}
 			}
 
 		});
@@ -262,6 +265,8 @@ public class ProductsGUI extends TEJFrame {
 	protected void clearComponents() {
 		productIdTextField.setText("");
 		productNameTextField.setText("");
+		
+		list.clearSelection();
 
 	}
 	

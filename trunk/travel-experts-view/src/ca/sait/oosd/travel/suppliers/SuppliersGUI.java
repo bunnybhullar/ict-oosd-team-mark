@@ -57,6 +57,7 @@ public class SuppliersGUI extends TEJFrame {
     private Collection<Suppliers> supplierCollection;
     private TEBusinessDelegate delegate;
     private Suppliers suppliers;
+    private JList list;
     private DefaultListModel model;
 	private JTextField supplierIdTextField = new JTextField(10);
 	private JTextField supplierNameTextField = new JTextField(20);
@@ -108,7 +109,7 @@ public class SuppliersGUI extends TEJFrame {
 		centerPane.add(dataEntryPane);
 		
 		//list to display the data
-		final JList list = new JList(model);
+		list = new JList(model);
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
@@ -138,10 +139,12 @@ public class SuppliersGUI extends TEJFrame {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				 suppliers = (Suppliers)list.getSelectedValue();
-				supplierIdTextField.setText(Long.toString(suppliers.getSupplierid()));
-				supplierNameTextField.setText(suppliers.getSupname());
-				supplierIdTextField.setEnabled(false);
+				if(list.getSelectedIndex() != -1) {
+					suppliers = (Suppliers)list.getSelectedValue();
+					supplierIdTextField.setText(Long.toString(suppliers.getSupplierid()));
+					supplierNameTextField.setText(suppliers.getSupname());
+					supplierIdTextField.setEnabled(false);	
+				}
 			}
 			
 		});
@@ -248,6 +251,8 @@ public class SuppliersGUI extends TEJFrame {
 	protected void clearComponents() {
 		supplierIdTextField.setText("");
 		supplierNameTextField.setText("");
+		
+		list.clearSelection();
 	}
 	
 	private void validateForm() throws ValidatorException{

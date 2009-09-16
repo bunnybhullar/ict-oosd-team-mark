@@ -48,6 +48,7 @@ public class AgentGUI extends TEJFrame {
     private TEBusinessDelegate delegate;
     private Agents agents;
     private DefaultListModel model;
+    private JList list;
     
     private final JTextField agentIdTextField= new JTextField(15);
     private final JTextField agentFirstNameTextField = new JTextField(15);
@@ -119,7 +120,7 @@ public class AgentGUI extends TEJFrame {
     	   model.addElement(agent);
        }       
        
-		final JList list = new JList(model);
+		list = new JList(model);
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
@@ -150,15 +151,16 @@ public class AgentGUI extends TEJFrame {
         selectionModel.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                agents = (Agents)list.getSelectedValue();
-                agentIdTextField.setText(Long.toString(agents.getAgentid()));
-                agentFirstNameTextField.setText(agents.getAgtfirstname());
-                agentMiddleInitialTextField.setText(agents.getAgtmiddleinitial());
-                agentLastNameTextField.setText(agents.getAgtlastname());
-                agentBusPhoneTextField.setText(agents.getAgtbusphone());
-                agentEmailTextField.setText(agents.getAgtemail());
-                agentPositionTextField.setText(agents.getAgtposition());
-                
+            	if(list.getSelectedIndex() != -1) {
+                    agents = (Agents)list.getSelectedValue();
+                    agentIdTextField.setText(Long.toString(agents.getAgentid()));
+                    agentFirstNameTextField.setText(agents.getAgtfirstname());
+                    agentMiddleInitialTextField.setText(agents.getAgtmiddleinitial());
+                    agentLastNameTextField.setText(agents.getAgtlastname());
+                    agentBusPhoneTextField.setText(agents.getAgtbusphone());
+                    agentEmailTextField.setText(agents.getAgtemail());
+                    agentPositionTextField.setText(agents.getAgtposition());	
+            	}
             }
         });
         
@@ -295,6 +297,8 @@ public class AgentGUI extends TEJFrame {
      	agentEmailTextField.setText("");
      	agentPositionTextField.setText("");
      	agencyIdCboBox.setSelectedIndex(0);
+     	
+     	list.clearSelection();
      	
      }
 	 

@@ -52,6 +52,7 @@ public class PackageGUI extends TEJFrame {
     private TEBusinessDelegate delegate;
     private Packages packages;
     private DefaultListModel model;
+    private JList list;
 
     final JTextField packageIdTextField = new JTextField(15);
     final JTextField packageNameTextField = new JTextField(15);
@@ -114,7 +115,7 @@ public class PackageGUI extends TEJFrame {
             model.addElement(pack);
         }
         
-		final JList list = new JList(model);
+		list = new JList(model);
 		list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		list.setLayoutOrientation(JList.VERTICAL);
 		list.setVisibleRowCount(-1);
@@ -146,14 +147,16 @@ public class PackageGUI extends TEJFrame {
         selectionModel.addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
-                packages = (Packages)list.getSelectedValue();
-                packageIdTextField.setText(Long.toString(packages.getPackageid()));
-                packageNameTextField.setText(packages.getPkgname());
-                descriptionTextField.setText(packages.getPkgdesc());
-                basePriceTextField.setText(packages.getPkgbaseprice().toString());
-                commissionTextField.setText(packages.getPkgagencycommission().toString());
-                startDate.setDate(packages.getPkgstartdate());
-                endDate.setDate(packages.getPkgenddate());
+            	if(list.getSelectedIndex() != -1) {
+                    packages = (Packages)list.getSelectedValue();
+                    packageIdTextField.setText(Long.toString(packages.getPackageid()));
+                    packageNameTextField.setText(packages.getPkgname());
+                    descriptionTextField.setText(packages.getPkgdesc());
+                    basePriceTextField.setText(packages.getPkgbaseprice().toString());
+                    commissionTextField.setText(packages.getPkgagencycommission().toString());
+                    startDate.setDate(packages.getPkgstartdate());
+                    endDate.setDate(packages.getPkgenddate());	
+            	}
             }
         });
 
@@ -277,6 +280,7 @@ public class PackageGUI extends TEJFrame {
             if(pack.getPackageid() == packages.getPackageid()) {
                 int position = model.indexOf(pack, 0);
                 model.set(position, packages);
+                
             }
         }
         
@@ -296,6 +300,8 @@ public class PackageGUI extends TEJFrame {
         commissionTextField.setText("");
         startDate.setDate(new Date());
         endDate.setDate(new Date());
+        
+        list.clearSelection();
 
     }
     
