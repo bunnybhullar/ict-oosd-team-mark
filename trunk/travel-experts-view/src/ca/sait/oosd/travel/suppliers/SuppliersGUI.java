@@ -218,7 +218,7 @@ public class SuppliersGUI extends TEJFrame {
 	            	
 				} else {
 					JOptionPane.showMessageDialog(SuppliersGUI.this, "You need to select a valid item from the list to delete", 
-							"Successful", JOptionPane.INFORMATION_MESSAGE);  
+							"Invalid Selection", JOptionPane.INFORMATION_MESSAGE);  
 					
 				}
 			}
@@ -253,7 +253,7 @@ public class SuppliersGUI extends TEJFrame {
 					
 				} else {
 					JOptionPane.showMessageDialog(SuppliersGUI.this, "You need to select a valid item from the list to update", 
-							"Successful", JOptionPane.INFORMATION_MESSAGE);
+							"Invalid Selection", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});

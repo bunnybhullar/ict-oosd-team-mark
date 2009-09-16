@@ -10,6 +10,7 @@ public enum TravelParts {
     PRODUCT,
     AGENT,
     PRODUCTSUPPLIER,
-    PACKAGEPRODUCTSUPPLIER
+    PACKAGEPRODUCTSUPPLIER,
+    NONE
             
 }
